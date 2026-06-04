@@ -1,0 +1,40 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependencies (на будущее, если перейдём на Next.js)
+node_modules/
+.pnp
+.pnp.js
+
+# Build output
+.next/
+out/
+dist/
+build/
+
+# Environment
+.env
+.env.local
+.env.development.local
+.env.production.local
+
+# Vercel
+.vercel
+
+# Не относится к MOMO
+brekhovo-presentation/
