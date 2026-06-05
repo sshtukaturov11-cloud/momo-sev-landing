@@ -38,3 +38,8 @@ build/
 
 # Не относится к MOMO
 brekhovo-presentation/
+
+# Claude / агенты — внутреннее состояние, не для репо
+.claude/
+.agents/
+skills-lock.json
