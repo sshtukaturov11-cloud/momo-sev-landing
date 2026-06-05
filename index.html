@@ -3258,29 +3258,8 @@
       });
     });
 
-    // ───── 16. Lazy reveal images с clip-path ─────
-    if ('IntersectionObserver' in window) {
-      const imgObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.style.clipPath = 'inset(0 0 0 0)';
-            imgObserver.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.15 });
-      document.querySelectorAll('.about-image, .season-card-img, .gallery-item').forEach((wrap) => {
-        if (prefersReducedMotion) return;
-        wrap.style.clipPath = 'inset(0 100% 0 0)';
-        wrap.style.transition = 'clip-path 1.1s cubic-bezier(0.2, 0.7, 0.2, 1)';
-        // staggered delay для галереи
-        if (wrap.classList.contains('gallery-item')) {
-          const items = Array.from(document.querySelectorAll('.gallery-item'));
-          const idx = items.indexOf(wrap);
-          wrap.style.transitionDelay = (idx * 0.08) + 's';
-        }
-        imgObserver.observe(wrap);
-      });
-    }
+    // ───── 16. (удалено) clip-path reveal — было хрупким, прятало картинки при сбое IO.
+    // Эффект fade-in уже обеспечивается классом .reveal, этого достаточно.
 
     // ───── 17. Subtle цифровая анимация рейтинга в hero ─────
     // (Опционально, чтобы рейтинг тоже «оживал»)
