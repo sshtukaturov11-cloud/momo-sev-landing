@@ -1,0 +1,3312 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#F5F1EA">
+  <title>МОМО — семейный ресторан с видом на бухту в Севастополе, пр. Нахимова, 2А</title>
+  <meta name="description" content="Семейный ресторан МОМО в Севастополе с 2013 года. Авторская кухня на крымских продуктах, вид на бухту, фоновый джаз. Бронь по телефону +7 978 855-75-54.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="МОМО — семейный ресторан с видом на бухту">
+  <meta property="og:description" content="Севастополь, проспект Нахимова, 2А. Авторская кухня, вид на бухту, с 2013 года.">
+  <meta property="og:image" content="МОМО/hero_IMG_8853.jpg">
+  <meta property="og:type" content="restaurant.restaurant">
+
+  <!-- Google Fonts (шрифты, не библиотеки) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Schema.org Restaurant -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "МОМО",
+    "alternateName": "MOMO",
+    "image": "МОМО/hero_IMG_8853.jpg",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "проспект Нахимова, 2А",
+      "addressLocality": "Севастополь",
+      "addressCountry": "RU"
+    },
+    "telephone": "+79788557554",
+    "url": "https://momo-sev.ru",
+    "servesCuisine": ["European", "Mediterranean", "Russian"],
+    "priceRange": "₽₽",
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": "2045"
+    },
+    "openingHours": "Mo-Su 10:00-23:00"
+  }
+  </script>
+
+  <style>
+    /* ───── 1. Дизайн-токены ───── */
+    :root {
+      /* Палитра */
+      --coral: #E07856;
+      --coral-dark: #C66143;
+      --teal: #7FB8B0;
+      --teal-deep: #5A968D;
+      --navy: #1F3045;
+      --navy-light: #2B4566;
+      --pink: #E8B6B0;
+      --pink-soft: #F2CDC8;
+      --oak: #D4B896;
+      --bg: #F5F1EA;
+      --bg-warm: #EFE9DD;
+      --surface: #FFFFFF;
+      --gray: #9C9A95;
+      --gray-light: #D8D5CF;
+      --charcoal: #2A2520;
+      --ink: #1F3045;
+      --ink-soft: #6B655E;
+      --teal-kids: #5BB8B5;
+      --teal-kids-light: #8FD0CE;
+      --velvet: #5C3A4A;
+      --velvet-deep: #3F2532;
+
+      /* Тени */
+      --shadow-sm: 0 2px 8px rgba(31, 48, 69, 0.06);
+      --shadow-md: 0 8px 24px rgba(31, 48, 69, 0.08);
+      --shadow-lg: 0 16px 48px rgba(31, 48, 69, 0.12);
+      --shadow-xl: 0 24px 64px rgba(31, 48, 69, 0.18);
+
+      /* Скругления */
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-pill: 999px;
+
+      /* Шрифты */
+      --font-serif: 'Cormorant Garamond', 'Georgia', 'Times New Roman', serif;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+      /* Контейнер */
+      --container-max: 1200px;
+      --gap-xs: 8px;
+      --gap-sm: 16px;
+      --gap-md: 24px;
+      --gap-lg: 48px;
+      --gap-xl: 96px;
+
+      /* Скорости */
+      --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+      --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ───── 2. Reset и базовые стили ───── */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 80px;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      font-size: 17px;
+      line-height: 1.6;
+      color: var(--ink);
+      background: var(--bg);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      /* SVG-noise overlay для бумажной текстуры */
+      background-image:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.1 0 0 0 0 0.1 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    img { max-width: 100%; height: auto; display: block; }
+    button { font: inherit; cursor: pointer; border: none; background: none; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+
+    /* ───── 3. Типографика ───── */
+    h1, h2, h3, h4 {
+      font-family: var(--font-serif);
+      font-weight: 500;
+      line-height: 1.1;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+    }
+
+    h1 { font-size: clamp(48px, 8vw, 96px); font-weight: 500; }
+    h2 { font-size: clamp(36px, 5vw, 56px); }
+    h3 { font-size: clamp(24px, 3vw, 32px); font-family: var(--font-sans); font-weight: 600; }
+    h4 { font-size: 20px; font-family: var(--font-sans); font-weight: 600; }
+
+    .h-italic { font-style: italic; font-weight: 300; }
+
+    p { margin-bottom: 1em; }
+    p:last-child { margin-bottom: 0; }
+
+    .container {
+      width: 100%;
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ───── 4. Утилиты ───── */
+    .section { padding: 96px 0; position: relative; }
+    .section-sm { padding: 64px 0; }
+    .section-eyebrow {
+      font-size: 13px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: 16px;
+      font-weight: 500;
+    }
+    .section-title { margin-bottom: 24px; }
+    .section-lead { font-size: 19px; color: var(--ink-soft); max-width: 720px; margin-bottom: 48px; }
+
+    /* ───── 5. Кнопки ───── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 16px 28px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-sans);
+      font-weight: 600;
+      font-size: 15px;
+      letter-spacing: 0.01em;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.2s var(--ease-out), background 0.2s ease, box-shadow 0.2s ease;
+      min-height: 48px;
+      white-space: nowrap;
+    }
+    .btn-primary {
+      background: var(--coral);
+      color: var(--surface);
+      box-shadow: 0 4px 16px rgba(224, 120, 86, 0.3);
+    }
+    .btn-primary:hover {
+      background: var(--coral-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(224, 120, 86, 0.4);
+    }
+    .btn-outline {
+      border: 2px solid var(--navy);
+      color: var(--navy);
+      background: transparent;
+    }
+    .btn-outline:hover {
+      background: var(--navy);
+      color: var(--surface);
+    }
+    .btn-link {
+      color: var(--ink);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      padding: 8px 0;
+    }
+    .btn-link:hover { color: var(--coral); }
+    .btn-lg { padding: 20px 36px; font-size: 16px; min-height: 56px; }
+    .btn-block { width: 100%; }
+
+    /* ───── 6. Header (sticky) ───── */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(245, 241, 234, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid transparent;
+      transition: padding 0.3s var(--ease-out), border-color 0.3s ease;
+      padding: 20px 0;
+    }
+    .header.scrolled {
+      padding: 12px 0;
+      border-bottom-color: rgba(31, 48, 69, 0.08);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .logo {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      text-decoration: none;
+      transition: transform 0.3s var(--ease-out);
+    }
+    .logo:hover { transform: scale(1.02); }
+    .logo-line { width: 100%; height: 1.5px; background: var(--navy); }
+    .logo-text {
+      font-family: var(--font-sans);
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      font-size: 22px;
+      color: var(--navy);
+      padding: 0 4px;
+    }
+    .header.scrolled .logo-text { font-size: 18px; }
+    .logo-tagline {
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      font-weight: 400;
+      margin-top: 1px;
+    }
+
+    .header-meta {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 14px;
+      color: var(--ink-soft);
+    }
+    .header-meta-item { display: flex; align-items: center; gap: 6px; }
+    .header-tel {
+      color: var(--ink);
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+    .header-tel:hover { color: var(--coral); }
+
+    .header-actions { display: flex; align-items: center; gap: 12px; }
+
+    /* mobile menu */
+    .mobile-toggle {
+      display: none;
+      width: 40px;
+      height: 40px;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-pill);
+      background: transparent;
+    }
+    .mobile-toggle svg { width: 24px; height: 24px; stroke: var(--navy); }
+
+    @media (max-width: 900px) {
+      .header-meta { display: none; }
+    }
+    @media (max-width: 600px) {
+      .header { padding: 14px 0; }
+      .header-actions .btn { padding: 12px 18px; font-size: 14px; min-height: 44px; }
+    }
+
+    /* ───── 7. Hero ───── */
+    .hero {
+      position: relative;
+      min-height: 90vh;
+      display: flex;
+      align-items: flex-end;
+      padding: 120px 0 64px;
+      overflow: hidden;
+      color: var(--surface);
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.05);
+      animation: heroZoom 20s ease-out forwards;
+    }
+    @keyframes heroZoom {
+      to { transform: scale(1); }
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(180deg,
+        rgba(31, 48, 69, 0.1) 0%,
+        rgba(31, 48, 69, 0) 30%,
+        rgba(31, 48, 69, 0) 50%,
+        rgba(31, 48, 69, 0.7) 100%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 760px;
+    }
+    .hero-title {
+      color: var(--surface);
+      font-size: clamp(48px, 9vw, 110px);
+      font-style: italic;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      text-shadow: 0 2px 16px rgba(31, 48, 69, 0.4);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+    .hero-title-line2 {
+      display: block;
+      font-style: normal;
+      font-weight: 300;
+      font-size: 0.5em;
+      letter-spacing: 0;
+      margin-top: 12px;
+    }
+    .hero-subtitle {
+      font-size: clamp(17px, 2vw, 21px);
+      max-width: 620px;
+      margin-bottom: 24px;
+      text-shadow: 0 2px 12px rgba(31, 48, 69, 0.4);
+      line-height: 1.5;
+    }
+    .hero-social {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 20px;
+      font-size: 14px;
+      margin-bottom: 36px;
+      text-shadow: 0 2px 8px rgba(31, 48, 69, 0.4);
+    }
+    .hero-social-item { display: flex; align-items: center; gap: 6px; }
+    .hero-social-item .dot { width: 4px; height: 4px; border-radius: 50%; background: currentColor; opacity: 0.5; }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .hero-actions .btn-outline {
+      border-color: var(--surface);
+      color: var(--surface);
+    }
+    .hero-actions .btn-outline:hover {
+      background: var(--surface);
+      color: var(--navy);
+    }
+    .hero-microcopy {
+      font-size: 13px;
+      opacity: 0.85;
+      margin-top: 4px;
+    }
+    .hero-scroll-hint {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.8;
+    }
+    .hero-scroll-hint .arrow {
+      width: 22px;
+      height: 22px;
+      border-right: 1.5px solid currentColor;
+      border-bottom: 1.5px solid currentColor;
+      transform: rotate(45deg);
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: rotate(45deg) translate(-2px, -2px); }
+      50% { transform: rotate(45deg) translate(2px, 2px); }
+    }
+
+    @media (max-width: 768px) {
+      .hero { min-height: 80vh; padding: 100px 0 48px; }
+      .hero-scroll-hint { display: none; }
+    }
+
+    /* ───── 8. Сегментирующие карточки ───── */
+    .segments {
+      padding: 64px 0 32px;
+      background: var(--bg);
+    }
+    .segments-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .segment-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 28px 24px;
+      text-align: left;
+      cursor: pointer;
+      transition: transform 0.3s var(--ease-out), box-shadow 0.3s ease;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid transparent;
+      display: block;
+    }
+    .segment-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--pink);
+    }
+    .segment-icon {
+      font-size: 28px;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .segment-title {
+      font-family: var(--font-sans);
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+    .segment-sub {
+      font-size: 14px;
+      color: var(--ink-soft);
+      line-height: 1.5;
+    }
+
+    .banket-stripe {
+      background: linear-gradient(135deg, var(--pink-soft) 0%, var(--pink) 100%);
+      border-radius: var(--radius-lg);
+      padding: 20px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      transition: transform 0.3s var(--ease-out), box-shadow 0.3s ease;
+    }
+    .banket-stripe:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .banket-stripe-text {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--navy);
+    }
+    .banket-stripe-text strong { font-weight: 700; }
+    .banket-stripe .arrow-icon { font-size: 20px; color: var(--coral); }
+
+    @media (max-width: 900px) {
+      .segments-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .segments-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ───── 9. О нас ───── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .about-text { font-size: 18px; line-height: 1.7; color: var(--ink); }
+    .about-text p { margin-bottom: 20px; }
+    .about-text p:first-of-type::first-letter {
+      font-family: var(--font-serif);
+      font-size: 3.5em;
+      font-weight: 400;
+      float: left;
+      line-height: 0.85;
+      margin: 8px 12px 0 0;
+      color: var(--coral);
+    }
+    .about-facts {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 32px;
+    }
+    .fact-card {
+      background: var(--surface);
+      border-radius: var(--radius-md);
+      padding: 20px 16px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+    .fact-num {
+      font-family: var(--font-serif);
+      font-size: 36px;
+      font-weight: 500;
+      color: var(--coral);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .fact-label { font-size: 13px; color: var(--ink-soft); }
+
+    .about-image {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      aspect-ratio: 4 / 5;
+    }
+    .about-image img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* Лотос-декор */
+    .lotus-decor {
+      position: absolute;
+      pointer-events: none;
+      opacity: 0.7;
+      animation: sway 6s ease-in-out infinite;
+      transform-origin: bottom center;
+    }
+    @keyframes sway {
+      0%, 100% { transform: rotate(-1.5deg); }
+      50% { transform: rotate(1.5deg); }
+    }
+    .lotus-decor.top-right { top: 32px; right: 32px; width: 100px; }
+    .lotus-decor.top-left { top: 32px; left: 32px; width: 100px; }
+    .lotus-decor.bottom-right { bottom: 0; right: 0; width: 140px; }
+
+    @media (max-width: 900px) {
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .about-image { max-width: 480px; }
+    }
+    @media (max-width: 480px) {
+      .about-facts { grid-template-columns: 1fr; }
+    }
+
+    /* ───── 10. Севастопольские сезоны ───── */
+    .seasons {
+      background: linear-gradient(180deg, var(--bg) 0%, var(--pink-soft) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .seasons-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+    .seasons-badge {
+      background: var(--surface);
+      border: 1px solid var(--gray-light);
+      padding: 12px 18px;
+      border-radius: var(--radius-pill);
+      font-size: 13px;
+      color: var(--navy);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: var(--shadow-sm);
+    }
+    .seasons-badge .badge-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--coral);
+      border-radius: 50%;
+      animation: pulse 2.5s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.4); opacity: 0.5; }
+    }
+    .seasons-badge a { color: var(--coral); margin-left: 4px; }
+
+    .seasons-microcopy {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 22px;
+      line-height: 1.4;
+      color: var(--navy);
+      max-width: 760px;
+      margin-bottom: 48px;
+      font-weight: 400;
+    }
+
+    .seasons-subhead {
+      font-family: var(--font-sans);
+      font-size: 13px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin: 48px 0 20px;
+      font-weight: 600;
+    }
+
+    .seasons-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    .season-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.4s var(--ease-out), box-shadow 0.4s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .season-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+    .season-card-img {
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      background: var(--bg-warm);
+    }
+    .season-card-img img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.6s var(--ease-out);
+    }
+    .season-card:hover .season-card-img img { transform: scale(1.06); }
+    .season-card-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .season-card-title {
+      font-family: var(--font-serif);
+      font-size: 24px;
+      font-weight: 500;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+    .season-card-desc {
+      font-size: 15px;
+      color: var(--ink-soft);
+      line-height: 1.5;
+      margin-bottom: 16px;
+      flex: 1;
+    }
+    .season-card-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 16px;
+      border-top: 1px solid var(--gray-light);
+    }
+    .gram { font-size: 13px; color: var(--ink-soft); letter-spacing: 0.05em; }
+    .price {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--coral);
+    }
+
+    .seasons-cta-card {
+      margin-top: 56px;
+      background: var(--navy);
+      color: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 32px 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .seasons-cta-card h3 { color: var(--surface); margin-bottom: 6px; }
+    .seasons-cta-card p { color: rgba(255,255,255,0.7); font-size: 14px; margin: 0; }
+
+    @media (max-width: 768px) {
+      .seasons-grid { grid-template-columns: 1fr; }
+      .seasons-microcopy { font-size: 19px; }
+    }
+
+    /* ───── 11. Меню — Кухня (табы) ───── */
+    .menu-kitchen { background: var(--bg); }
+    .tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+      padding-bottom: 4px;
+    }
+    .tab {
+      padding: 10px 20px;
+      border-radius: var(--radius-pill);
+      background: var(--surface);
+      color: var(--ink);
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+      border: 1px solid var(--gray-light);
+      white-space: nowrap;
+    }
+    .tab:hover { transform: translateY(-2px); border-color: var(--coral); }
+    .tab.active { background: var(--navy); color: var(--surface); border-color: var(--navy); }
+
+    .dishes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .dish-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s var(--ease-out), box-shadow 0.3s ease;
+    }
+    .dish-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .dish-card-img {
+      aspect-ratio: 1 / 1;
+      background: var(--bg-warm);
+      overflow: hidden;
+      position: relative;
+    }
+    .dish-card-img img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.5s var(--ease-out);
+    }
+    .dish-card:hover .dish-card-img img { transform: scale(1.05); }
+    .dish-card-body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+    .dish-card-name {
+      font-family: var(--font-sans);
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+    .dish-card-desc {
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      font-weight: 300;
+      line-height: 1.5;
+      margin-bottom: 12px;
+      flex: 1;
+    }
+    .dish-card-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .allergens { display: flex; gap: 6px; }
+    .allergen {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--bg-warm);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: var(--ink-soft);
+      cursor: help;
+    }
+
+    .menu-foot {
+      margin-top: 40px;
+      display: flex;
+      justify-content: center;
+    }
+
+    @media (max-width: 900px) { .dishes-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .dishes-grid { grid-template-columns: 1fr; } }
+
+    /* ───── 12. Меню — Бар ───── */
+    .bar-section { background: var(--bg-warm); }
+    .bar-cocktails {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px 24px;
+      margin-bottom: 56px;
+    }
+    .cocktail {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--gray-light);
+      align-items: start;
+    }
+    .cocktail-name {
+      font-family: var(--font-sans);
+      font-weight: 600;
+      font-size: 17px;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+    .cocktail-comp {
+      font-size: 13px;
+      color: var(--ink-soft);
+      line-height: 1.5;
+    }
+    .cocktail-price {
+      font-family: var(--font-serif);
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--coral);
+      white-space: nowrap;
+    }
+    .cocktail-volume {
+      font-size: 12px;
+      color: var(--ink-soft);
+      text-align: right;
+      margin-top: 2px;
+    }
+
+    .warm-drinks {
+      background: linear-gradient(135deg, var(--velvet) 0%, var(--velvet-deep) 100%);
+      color: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 48px 36px;
+      margin-bottom: 32px;
+    }
+    .warm-drinks h3 { color: var(--surface); margin-bottom: 24px; }
+    .warm-drinks-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px 32px;
+    }
+    .warm-drink {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+    }
+    .warm-drink-name { font-size: 15px; color: rgba(255,255,255,0.95); }
+    .warm-drink-price {
+      font-family: var(--font-serif);
+      font-weight: 500;
+      color: var(--pink);
+    }
+
+    .wine-block {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      box-shadow: var(--shadow-sm);
+      text-align: center;
+    }
+    .wine-block h3 { margin-bottom: 12px; }
+    .wine-block .wine-quote {
+      font-family: var(--font-serif);
+      font-style: italic;
+      color: var(--ink-soft);
+      font-size: 18px;
+      max-width: 600px;
+      margin: 0 auto 24px;
+    }
+
+    @media (max-width: 768px) {
+      .bar-cocktails { grid-template-columns: 1fr; gap: 0; }
+      .warm-drinks-grid { grid-template-columns: 1fr; }
+      .warm-drinks { padding: 36px 24px; }
+    }
+
+    /* ───── 13. Детское меню ───── */
+    .kids-section {
+      background: var(--teal-kids);
+      color: var(--surface);
+      position: relative;
+      overflow: hidden;
+    }
+    .kids-section h2 { color: var(--surface); }
+    .kids-section .section-eyebrow { color: rgba(255,255,255,0.85); }
+    .kids-section .section-lead { color: rgba(255,255,255,0.95); }
+
+    .kids-decor { position: absolute; pointer-events: none; opacity: 0.18; }
+    .kids-decor.sun { top: 80px; left: 5%; width: 90px; }
+    .kids-decor.fish { bottom: 80px; right: 8%; width: 110px; transform: rotate(-12deg); }
+    .kids-decor.boat { top: 30%; right: 20%; width: 80px; }
+
+    .kids-menu-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px 32px;
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 32px 36px;
+      box-shadow: var(--shadow-md);
+    }
+    .kids-item {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px dashed var(--teal-kids-light);
+      align-items: center;
+    }
+    .kids-item:last-child, .kids-item:nth-last-child(2) { border-bottom: none; }
+    .kids-item-name { font-weight: 500; color: var(--navy); font-size: 15px; }
+    .kids-item-gram { font-size: 13px; color: var(--ink-soft); }
+    .kids-item-price {
+      font-family: var(--font-serif);
+      font-weight: 600;
+      color: var(--teal-kids);
+      font-size: 18px;
+    }
+    .kids-note {
+      margin-top: 24px;
+      font-size: 15px;
+      color: rgba(255,255,255,0.95);
+      text-align: center;
+    }
+    .kids-note a { color: var(--surface); text-decoration: underline; }
+
+    @media (max-width: 768px) {
+      .kids-menu-grid { grid-template-columns: 1fr; padding: 24px; }
+      .kids-decor { display: none; }
+    }
+
+    /* ───── 14. Интерьер и терраса (галерея) ───── */
+    .gallery-section { background: var(--bg); }
+    .gallery-quote {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: clamp(22px, 3vw, 30px);
+      line-height: 1.4;
+      max-width: 760px;
+      margin: 0 auto 48px;
+      text-align: center;
+      color: var(--ink);
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      grid-auto-rows: 200px;
+    }
+    .gallery-item {
+      overflow: hidden;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      background: var(--bg-warm);
+      transition: transform 0.4s var(--ease-out), box-shadow 0.4s ease;
+      position: relative;
+    }
+    .gallery-item:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+    .gallery-item img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.5s var(--ease-out), filter 0.3s;
+    }
+    .gallery-item:hover img { transform: scale(1.05); filter: brightness(1.05); }
+    .gallery-item.size-big { grid-column: span 2; grid-row: span 2; }
+    .gallery-item.size-tall { grid-row: span 2; }
+    .gallery-item.size-wide { grid-column: span 2; }
+
+    @media (max-width: 900px) {
+      .gallery { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 180px; }
+      .gallery-item.size-big { grid-column: span 2; grid-row: span 2; }
+      .gallery-item.size-wide { grid-column: span 2; grid-row: span 1; }
+      .gallery-item.size-tall { grid-row: span 2; }
+    }
+    @media (max-width: 480px) {
+      .gallery { grid-template-columns: 1fr; }
+      .gallery-item, .gallery-item.size-big, .gallery-item.size-tall, .gallery-item.size-wide {
+        grid-column: span 1; grid-row: span 1;
+      }
+    }
+
+    /* Lightbox */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(31, 48, 69, 0.92);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+      cursor: zoom-out;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img { max-width: 95vw; max-height: 90vh; border-radius: var(--radius-md); box-shadow: var(--shadow-xl); }
+    .lightbox-close {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      color: var(--surface);
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .lightbox-close:hover { background: rgba(255,255,255,0.25); }
+
+    /* ───── 15. Для семей с детьми ───── */
+    .families-section { background: var(--bg); }
+    .families-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .family-item {
+      background: var(--surface);
+      border-radius: var(--radius-md);
+      padding: 28px 20px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.3s var(--ease-out);
+    }
+    .family-item:hover { transform: translateY(-4px); }
+    .family-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--pink-soft);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      font-size: 26px;
+    }
+    .family-title {
+      font-weight: 600;
+      color: var(--navy);
+      font-size: 16px;
+      margin-bottom: 6px;
+    }
+    .family-desc { font-size: 14px; color: var(--ink-soft); line-height: 1.5; }
+
+    @media (max-width: 768px) { .families-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px) { .families-grid { grid-template-columns: 1fr; } }
+
+    /* ───── 16. Банкеты ───── */
+    .banket-section {
+      background: linear-gradient(180deg, var(--bg) 0%, var(--pink-soft) 100%);
+      position: relative;
+    }
+    .banket-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .banket-text { font-size: 18px; line-height: 1.7; color: var(--ink); }
+    .banket-features {
+      list-style: none;
+      margin: 28px 0 32px;
+      display: grid;
+      gap: 14px;
+    }
+    .banket-features li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      font-size: 16px;
+    }
+    .banket-features li::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: var(--coral);
+      border-radius: 50%;
+      margin-top: 9px;
+      flex-shrink: 0;
+    }
+    .banket-cta-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      box-shadow: var(--shadow-lg);
+      border-top: 4px solid var(--coral);
+    }
+    .banket-cta-card h3 { margin-bottom: 8px; }
+    .banket-cta-card .microcopy {
+      font-size: 14px;
+      color: var(--ink-soft);
+      margin-bottom: 24px;
+    }
+    .banket-tel-big {
+      font-family: var(--font-serif);
+      font-size: clamp(28px, 4vw, 38px);
+      font-weight: 500;
+      color: var(--navy);
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .banket-grid { grid-template-columns: 1fr; gap: 32px; }
+    }
+
+    /* ───── 17. FAQ ───── */
+    .faq-section { background: var(--bg-warm); }
+    .faq-list { max-width: 820px; margin: 0 auto; }
+    .faq-item {
+      background: var(--surface);
+      border-radius: var(--radius-md);
+      margin-bottom: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.2s;
+    }
+    .faq-item:hover { box-shadow: var(--shadow-md); }
+    .faq-q {
+      padding: 20px 24px;
+      width: 100%;
+      text-align: left;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      font-size: 17px;
+      font-weight: 500;
+      color: var(--navy);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .faq-q:hover { background: var(--bg); }
+    .faq-q .plus {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      position: relative;
+      transition: transform 0.3s var(--ease-out);
+    }
+    .faq-q .plus::before,
+    .faq-q .plus::after {
+      content: '';
+      position: absolute;
+      background: var(--coral);
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .faq-q .plus::before { width: 14px; height: 2px; }
+    .faq-q .plus::after { width: 2px; height: 14px; transition: transform 0.3s; }
+    .faq-item.open .faq-q .plus::after { transform: translate(-50%, -50%) rotate(90deg); }
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s var(--ease-out);
+    }
+    .faq-a-inner { padding: 0 24px 24px; color: var(--ink-soft); font-size: 16px; line-height: 1.6; }
+    .faq-item.open .faq-a { max-height: 500px; }
+
+    /* ───── 18. Контакты и карта ───── */
+    .contacts-section { background: var(--bg); }
+    .contacts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 48px;
+      align-items: stretch;
+    }
+    .contacts-info {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      box-shadow: var(--shadow-sm);
+    }
+    .contact-row {
+      display: flex;
+      gap: 16px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--gray-light);
+      align-items: flex-start;
+    }
+    .contact-row:last-child { border-bottom: none; }
+    .contact-icon {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: var(--coral);
+      color: var(--surface);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+    .contact-content { flex: 1; }
+    .contact-label {
+      font-size: 12px;
+      color: var(--ink-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 4px;
+    }
+    .contact-value {
+      font-size: 17px;
+      color: var(--ink);
+      font-weight: 500;
+    }
+    .contact-value a { color: var(--ink); transition: color 0.2s; }
+    .contact-value a:hover { color: var(--coral); }
+    .contact-socials { display: flex; gap: 10px; margin-top: 10px; }
+    .contact-socials a {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--bg-warm);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .contact-socials a:hover { background: var(--teal); color: var(--surface); }
+    .contact-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+
+    .map-wrap {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      min-height: 420px;
+    }
+    .map-wrap iframe { width: 100%; height: 100%; min-height: 420px; border: 0; display: block; }
+
+    @media (max-width: 900px) {
+      .contacts-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ───── 19. Финальный CTA ───── */
+    .final-cta {
+      background: linear-gradient(135deg, var(--coral) 0%, var(--coral-dark) 100%);
+      color: var(--surface);
+      text-align: center;
+      padding: 96px 0;
+    }
+    .final-cta h2 {
+      color: var(--surface);
+      font-size: clamp(40px, 6vw, 72px);
+      margin-bottom: 16px;
+    }
+    .final-cta p {
+      font-size: 20px;
+      opacity: 0.92;
+      margin-bottom: 36px;
+    }
+    .final-tel {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--surface);
+      color: var(--navy);
+      padding: 24px 44px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-serif);
+      font-size: clamp(24px, 4vw, 38px);
+      font-weight: 500;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.2);
+      transition: transform 0.3s var(--ease-out);
+      text-decoration: none;
+    }
+    .final-tel:hover { transform: scale(1.04); }
+    .final-tel .tel-icon { font-size: 0.9em; color: var(--coral); }
+    .final-alt {
+      display: inline-block;
+      margin-top: 24px;
+      color: var(--surface);
+      text-decoration: underline;
+      text-underline-offset: 6px;
+      opacity: 0.85;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-size: 16px;
+      font-family: var(--font-sans);
+    }
+    .final-alt:hover { opacity: 1; }
+
+    /* ───── 20. Форма «Перезвоните мне» (модалка) ───── */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(31, 48, 69, 0.7);
+      backdrop-filter: blur(8px);
+      z-index: 1100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .modal.open { display: flex; opacity: 1; }
+    .modal-box {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      max-width: 460px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      transform: translateY(20px);
+      transition: transform 0.3s var(--ease-out);
+    }
+    .modal.open .modal-box { transform: translateY(0); }
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--bg);
+      color: var(--ink);
+      font-size: 18px;
+      transition: background 0.2s;
+    }
+    .modal-close:hover { background: var(--gray-light); }
+    .modal h3 { margin-bottom: 8px; }
+    .modal p.subtitle { color: var(--ink-soft); margin-bottom: 24px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      color: var(--ink-soft);
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1.5px solid var(--gray-light);
+      border-radius: var(--radius-md);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      color: var(--ink);
+      background: var(--bg);
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--coral);
+      background: var(--surface);
+    }
+    .form-group textarea { resize: vertical; min-height: 80px; }
+    .form-check {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 13px;
+      color: var(--ink-soft);
+      margin-bottom: 20px;
+      cursor: pointer;
+    }
+    .form-check input[type="checkbox"] { margin-top: 3px; flex-shrink: 0; }
+    .form-check a { color: var(--coral); text-decoration: underline; }
+    .form-success {
+      text-align: center;
+      padding: 24px;
+      display: none;
+    }
+    .form-success.active { display: block; }
+    .form-success .check {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: var(--teal);
+      color: var(--surface);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      margin-bottom: 16px;
+    }
+
+    /* ───── 21. Футер ───── */
+    footer {
+      background: var(--navy);
+      color: var(--surface);
+      padding: 64px 0 32px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+    .footer-brand .logo-text { color: var(--surface); }
+    .footer-brand .logo-line { background: var(--surface); }
+    .footer-brand .logo-tagline { color: rgba(255,255,255,0.6); }
+    .footer-slogan {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 18px;
+      margin-top: 16px;
+      color: rgba(255,255,255,0.85);
+    }
+    .footer h4 {
+      color: var(--surface);
+      font-size: 14px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+    .footer ul li { padding: 6px 0; font-size: 15px; color: rgba(255,255,255,0.8); }
+    .footer ul li a { transition: color 0.2s; }
+    .footer ul li a:hover { color: var(--coral); }
+    .footer-socials { display: flex; gap: 10px; margin-top: 12px; }
+    .footer-socials a {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .footer-socials a:hover { background: var(--coral); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.12);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.55);
+    }
+    .footer-bottom a { color: rgba(255,255,255,0.7); text-decoration: underline; }
+
+    @media (max-width: 768px) {
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+    }
+
+    /* ───── 22. Floating CTA ───── */
+    .float-cta {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 90;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--coral);
+      color: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 24px rgba(224, 120, 86, 0.5);
+      animation: floatPulse 3s ease-in-out infinite;
+      transition: transform 0.3s var(--ease-out);
+    }
+    .float-cta:hover { transform: scale(1.1); animation: none; }
+    .float-cta svg { width: 26px; height: 26px; }
+    @keyframes floatPulse {
+      0%, 100% { box-shadow: 0 8px 24px rgba(224, 120, 86, 0.5); }
+      50% { box-shadow: 0 8px 32px rgba(224, 120, 86, 0.8), 0 0 0 12px rgba(224, 120, 86, 0.15); }
+    }
+
+    /* ───── 23. Scroll-reveal анимации ───── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ───── 24. Cookie banner ───── */
+    .cookie-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--surface);
+      border-top: 1px solid var(--gray-light);
+      padding: 14px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      z-index: 95;
+      font-size: 14px;
+      color: var(--ink-soft);
+      box-shadow: 0 -4px 16px rgba(0,0,0,0.05);
+      transform: translateY(100%);
+      transition: transform 0.4s var(--ease-out);
+    }
+    .cookie-bar.show { transform: translateY(0); }
+    .cookie-bar a { color: var(--coral); text-decoration: underline; }
+    .cookie-bar .btn { padding: 8px 16px; min-height: 36px; font-size: 13px; }
+
+    /* ───────────────────────────────────────
+       РАСШИРЕНИЕ: ВАУ-ЭФФЕКТЫ (2026-05-20)
+       ─────────────────────────────────────── */
+
+    /* ═══ 26.1. Прогресс-бар скролла (фиксированная полоска сверху) ═══ */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--coral) 0%, var(--pink) 50%, var(--teal) 100%);
+      z-index: 200;
+      transition: width 0.08s linear;
+      box-shadow: 0 0 12px rgba(224, 120, 86, 0.5);
+    }
+
+    /* ═══ 26.2. Анимированный градиент на hero-заголовке ═══ */
+    .hero-title {
+      background: linear-gradient(
+        110deg,
+        #FFFFFF 0%,
+        #FFE8DC 25%,
+        #FFFFFF 45%,
+        #FFD4C6 65%,
+        #FFFFFF 85%,
+        #F8E8E0 100%
+      );
+      background-size: 250% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: titleShimmer 12s ease-in-out infinite;
+      text-shadow: none;
+      filter: drop-shadow(0 2px 24px rgba(31, 48, 69, 0.55));
+    }
+    @keyframes titleShimmer {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    /* ═══ 26.3. Letter stagger на hero-заголовке ═══ */
+    .hero-title .char {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(40px) rotateZ(8deg);
+      animation: charReveal 1s var(--ease-out) forwards;
+    }
+    .hero-title .char.space { width: 0.3em; }
+    @keyframes charReveal {
+      to { opacity: 1; transform: translateY(0) rotateZ(0); }
+    }
+
+    /* ═══ 26.4. Hero-фон без agressive zoom (parallax управляет в JS) ═══ */
+    .hero-bg img {
+      transform: scale(1.08);
+      animation: none;
+      will-change: transform;
+    }
+
+    /* ═══ 26.5. Shimmer-overlay на primary-кнопках ═══ */
+    .btn-primary {
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        120deg,
+        transparent 25%,
+        rgba(255, 255, 255, 0.35) 50%,
+        transparent 75%
+      );
+      transform: translateX(-100%);
+      transition: transform 0.7s var(--ease-out);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .btn-primary:hover::before { transform: translateX(100%); }
+    .btn-primary > * { position: relative; z-index: 1; }
+
+    /* ═══ 26.6. 3D-tilt на карточках (управляется в JS) ═══ */
+    .segment-card,
+    .season-card,
+    .dish-card,
+    .family-item,
+    .fact-card {
+      transform-style: preserve-3d;
+      perspective: 1000px;
+      will-change: transform;
+    }
+
+    /* ═══ 26.7. Магнетные кнопки ═══ */
+    .btn-primary,
+    .btn-outline,
+    .final-tel,
+    .float-cta {
+      will-change: transform;
+    }
+
+    /* ═══ 26.8. Глубокий hover на сегмент-карточках ═══ */
+    .segment-card {
+      position: relative;
+      overflow: hidden;
+    }
+    .segment-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        circle at var(--mx, 50%) var(--my, 50%),
+        rgba(232, 182, 176, 0.18) 0%,
+        transparent 50%
+      );
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+    .segment-card:hover::before { opacity: 1; }
+    .segment-card .segment-icon {
+      transition: transform 0.4s var(--ease-out);
+    }
+    .segment-card:hover .segment-icon {
+      transform: scale(1.15) rotate(-4deg);
+    }
+
+    /* ═══ 26.9. Анимированный gradient mesh на фоне нескольких секций ═══ */
+    .mesh-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .mesh-bg::before,
+    .mesh-bg::after {
+      content: '';
+      position: absolute;
+      width: 60vw;
+      height: 60vw;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.5;
+      animation: meshFloat 20s ease-in-out infinite;
+    }
+    .mesh-bg::before {
+      background: var(--pink-soft);
+      top: -15%;
+      left: -20%;
+    }
+    .mesh-bg::after {
+      background: var(--teal);
+      bottom: -20%;
+      right: -15%;
+      animation-delay: -10s;
+      animation-duration: 25s;
+    }
+    @keyframes meshFloat {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(4%, -3%) scale(1.05); }
+      66% { transform: translate(-3%, 4%) scale(0.95); }
+    }
+    .section > .container { position: relative; z-index: 1; }
+
+    /* ═══ 26.10. Counter-анимация цифр ═══ */
+    .fact-num {
+      display: inline-block;
+      transition: transform 0.3s var(--ease-out);
+    }
+    .fact-card:hover .fact-num {
+      transform: scale(1.08);
+    }
+
+    /* ═══ 26.11. Анимированный underline для всех текстовых ссылок ═══ */
+    .anim-link {
+      position: relative;
+      display: inline-block;
+    }
+    .anim-link::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      width: 100%;
+      height: 1.5px;
+      background: var(--coral);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.4s var(--ease-out);
+    }
+    .anim-link:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    /* ═══ 26.12. Subtle глобальный fade-in body при загрузке ═══ */
+    body {
+      opacity: 0;
+      animation: bodyFade 0.6s var(--ease-out) 0.2s forwards;
+    }
+    @keyframes bodyFade {
+      to { opacity: 1; }
+    }
+
+    /* ═══ 26.13. Усиленные reveal с разными направлениями ═══ */
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+    }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(40px);
+      transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+    }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+    .reveal-scale {
+      opacity: 0;
+      transform: scale(0.92);
+      transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+    }
+    .reveal-scale.visible { opacity: 1; transform: scale(1); }
+
+    /* ═══ 26.14. Image clip-path reveal ═══ */
+    .about-image img,
+    .season-card-img img,
+    .dish-card-img img {
+      transition: transform 0.6s var(--ease-out), filter 0.4s ease;
+    }
+    .about-image {
+      position: relative;
+      overflow: hidden;
+    }
+    .about-image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(31, 48, 69, 0.05), transparent);
+      pointer-events: none;
+    }
+
+    /* ═══ 26.15. Section divider с волной (декоративный) ═══ */
+    .wave-divider {
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .wave-divider svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* ═══ 26.16. Floating CTA enhanced ═══ */
+    .float-cta {
+      transition: transform 0.4s var(--ease-out), box-shadow 0.4s ease;
+    }
+    .float-cta::after {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      border: 2px solid var(--coral);
+      opacity: 0;
+      animation: floatRing 2.5s ease-out infinite;
+    }
+    @keyframes floatRing {
+      0% { transform: scale(0.85); opacity: 0.6; }
+      100% { transform: scale(1.6); opacity: 0; }
+    }
+
+    /* ═══ 26.17. Hero-overlay с лёгким мерцанием света ═══ */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: radial-gradient(
+        ellipse at 70% 30%,
+        rgba(255, 200, 150, 0.18) 0%,
+        transparent 50%
+      );
+      animation: lightFlicker 8s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes lightFlicker {
+      0%, 100% { opacity: 0.7; }
+      50% { opacity: 1; }
+    }
+
+    /* ═══ 26.18. Final CTA — анимированный градиент ═══ */
+    .final-cta {
+      background: linear-gradient(
+        135deg,
+        var(--coral) 0%,
+        var(--coral-dark) 30%,
+        #B85440 50%,
+        var(--coral-dark) 70%,
+        var(--coral) 100%
+      );
+      background-size: 300% 300%;
+      animation: ctaGradient 14s ease-in-out infinite;
+      position: relative;
+      overflow: hidden;
+    }
+    @keyframes ctaGradient {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    .final-cta::before {
+      content: '';
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, transparent 70%);
+      top: -200px;
+      right: -200px;
+      animation: ctaOrb 18s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .final-cta::after {
+      content: '';
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+      bottom: -150px;
+      left: -150px;
+      animation: ctaOrb 22s ease-in-out infinite reverse;
+      pointer-events: none;
+    }
+    @keyframes ctaOrb {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(40px, 40px) scale(1.15); }
+    }
+
+    /* ═══ 26.19. Sticky-CTA shimmer (header) ═══ */
+    .header .btn-primary {
+      background: linear-gradient(135deg, var(--coral) 0%, var(--coral-dark) 100%);
+    }
+
+    /* ═══ 26.20. Анимация заголовков секций — slide-in от снизу ═══ */
+    .section-title {
+      overflow: hidden;
+    }
+    .reveal.visible .section-title,
+    .visible > .section-title {
+      animation: titleSlide 1s var(--ease-out) forwards;
+    }
+    @keyframes titleSlide {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ═══ 26.21. Plus-icon в FAQ — поворот при открытии ═══ */
+    .faq-item.open .faq-q .plus {
+      transform: rotate(180deg);
+    }
+
+    /* ═══ 26.22. Tab активный — с подложкой ═══ */
+    .tab {
+      position: relative;
+      overflow: hidden;
+    }
+    .tab::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--navy);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s var(--ease-out);
+      z-index: 0;
+    }
+    .tab.active::before { transform: scaleX(1); }
+    .tab > * { position: relative; z-index: 1; }
+    .tab { transition: color 0.3s ease, border-color 0.3s ease; }
+    .tab.active { background: transparent; border-color: var(--navy); }
+
+    /* ═══ 26.23. Carousel-like marquee для соц-сигналов в hero (без свайпа) ═══ */
+    .hero-social {
+      position: relative;
+    }
+
+    /* ═══ 26.24. Soft glow на CTA в hero ═══ */
+    .hero-actions .btn-primary {
+      box-shadow:
+        0 4px 16px rgba(224, 120, 86, 0.4),
+        0 0 0 0 rgba(224, 120, 86, 0.5);
+      animation: ctaPulse 3s ease-in-out infinite;
+    }
+    @keyframes ctaPulse {
+      0%, 100% { box-shadow: 0 4px 16px rgba(224, 120, 86, 0.4), 0 0 0 0 rgba(224, 120, 86, 0.4); }
+      50% { box-shadow: 0 4px 24px rgba(224, 120, 86, 0.6), 0 0 0 12px rgba(224, 120, 86, 0); }
+    }
+
+    /* ═══ 26.25. prefers-reduced-motion (расширенный) ═══ */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .reveal, .reveal-left, .reveal-right, .reveal-scale { opacity: 1; transform: none; }
+      .hero-bg img { animation: none; transform: scale(1.05); }
+      .hero-title {
+        animation: none;
+        background: none;
+        -webkit-text-fill-color: var(--surface);
+        color: var(--surface);
+      }
+      .hero-title .char { opacity: 1; transform: none; animation: none; }
+      body { opacity: 1; animation: none; }
+      .mesh-bg::before, .mesh-bg::after { animation: none; }
+      .final-cta { animation: none; background: linear-gradient(135deg, var(--coral) 0%, var(--coral-dark) 100%); }
+      .final-cta::before, .final-cta::after { animation: none; }
+      .hero::before { animation: none; }
+      .hero-actions .btn-primary { animation: none; }
+      .float-cta::after { animation: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════ ПРОГРЕСС-БАР СКРОЛЛА ═══════════ -->
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
+  <!-- ═══════════ ШАПКА ═══════════ -->
+  <header class="header" id="header">
+    <div class="container header-inner">
+      <a href="#" class="logo" aria-label="МОМО, на главную">
+        <span class="logo-line"></span>
+        <span class="logo-text">МОМО</span>
+        <span class="logo-line"></span>
+        <span class="logo-tagline">семейный ресторан · с 2013</span>
+      </a>
+
+      <nav class="header-meta" aria-label="Контактная информация в шапке">
+        <div class="header-meta-item">📍 Севастополь, Нахимова 2А</div>
+        <div class="header-meta-item">🕒 10:00–23:00</div>
+      </nav>
+
+      <div class="header-actions">
+        <a href="tel:+79788557554" class="header-tel" aria-label="Позвонить +7 978 855 75 54">+7 978 855‑75‑54</a>
+        <a href="tel:+79788557554" class="btn btn-primary" aria-label="Забронировать стол по телефону">Забронировать</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══════════ HERO ═══════════ -->
+  <section class="hero" id="hero">
+    <div class="hero-bg">
+      <img src="МОМО/hero_IMG_8853.jpg"
+           alt="Зал ресторана МОМО на закате — коралловые лампы, диваны с подушками, окна с видом на Севастопольскую бухту"
+           loading="eager"
+           fetchpriority="high">
+    </div>
+
+    <div class="container hero-content">
+      <h1 class="hero-title">
+        МОМО.
+        <span class="hero-title-line2">Семейный ресторан с видом на бухту.</span>
+      </h1>
+
+      <p class="hero-subtitle">
+        Севастополь, проспект Нахимова, 2А. Авторская кухня на крымских продуктах,
+        фоновый джаз и большие окна, в которые входит море.
+      </p>
+
+      <div class="hero-social">
+        <span class="hero-social-item">★ 4.9 · Яндекс.Карты</span>
+        <span class="hero-social-item"><span class="dot"></span> 2045 отзывов</span>
+        <span class="hero-social-item"><span class="dot"></span> с 2013 года</span>
+        <span class="hero-social-item"><span class="dot"></span> средний чек 1500 ₽</span>
+      </div>
+
+      <div class="hero-actions">
+        <a href="tel:+79788557554" class="btn btn-primary btn-lg" aria-label="Позвонить +7 978 855 75 54 и забронировать стол">
+          📞 Забронировать · +7 978 855‑75‑54
+        </a>
+        <button class="btn btn-outline btn-lg" data-modal-open="callback" aria-label="Открыть форму, оставить номер для обратного звонка">
+          Перезвоните мне
+        </button>
+      </div>
+      <p class="hero-microcopy">Звонок бесплатный. Ответим за 1–2 гудка.</p>
+    </div>
+
+    <div class="hero-scroll-hint" aria-hidden="true">
+      <span>10:00 – 23:00, без выходных</span>
+      <span class="arrow"></span>
+    </div>
+  </section>
+
+  <main>
+
+  <!-- ═══════════ СЕГМЕНТЫ «СЕГОДНЯ Я...» ═══════════ -->
+  <section class="segments" aria-label="Выберите, для чего вы пришли">
+    <div class="container">
+      <div class="segments-grid">
+        <a href="#about" class="segment-card reveal" aria-label="Встречаюсь с подругами">
+          <span class="segment-icon">☕</span>
+          <div class="segment-title">Встречаюсь с подругами</div>
+          <div class="segment-sub">Светлый зал, тихий джаз, спокойный разговор</div>
+        </a>
+        <a href="#about" class="segment-card reveal reveal-delay-1" aria-label="На свидание">
+          <span class="segment-icon">🍷</span>
+          <div class="segment-title">На свидание</div>
+          <div class="segment-sub">Стол у окна, мягкий свет, без лишнего внимания</div>
+        </a>
+        <a href="#kids-menu" class="segment-card reveal reveal-delay-2" aria-label="С детьми или с семьёй">
+          <span class="segment-icon">🧒</span>
+          <div class="segment-title">С детьми или с семьёй</div>
+          <div class="segment-sub">Детская комната, детское меню, стульчики, мультики</div>
+        </a>
+        <a href="#seasons" class="segment-card reveal reveal-delay-3" aria-label="На сезонный сет">
+          <span class="segment-icon">🌿</span>
+          <div class="segment-title">На сезонный сет</div>
+          <div class="segment-sub">Локальные продукты, 4 блюда + 4 коктейля</div>
+        </a>
+      </div>
+
+      <a href="#banket" class="banket-stripe reveal reveal-delay-4" aria-label="Перейти к разделу банкеты и торжества">
+        <div class="banket-stripe-text">
+          🎉 <strong>Банкеты и торжества</strong> — свадьбы, юбилеи, семейные встречи. Скажите при звонке.
+        </div>
+        <span class="arrow-icon">→</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ═══════════ О НАС ═══════════ -->
+  <section class="section" id="about">
+    <div class="mesh-bg" aria-hidden="true"></div>
+    <div class="container">
+      <div class="about-grid">
+        <div class="reveal">
+          <div class="section-eyebrow">О нас</div>
+          <h2 class="section-title h-italic">Тёплое место в&nbsp;самом сердце города</h2>
+
+          <div class="about-text">
+            <p>МОМО — семейный ресторан, в котором одинаково хорошо и за воскресным завтраком с детьми, и на тихом ужине вдвоём. С 2013 года мы готовим из того, что даёт Крым: пеленгас от местных рыбаков, рапана с побережья, овощи с фермы, вина с южного берега.</p>
+            <p>Кухня — авторская, на стыке Европы и Азии. В окнах — севастопольская бухта, в колонках — мягкий джаз.</p>
+          </div>
+
+          <div class="about-facts">
+            <div class="fact-card">
+              <div class="fact-num" data-target="2013" data-suffix="">2013</div>
+              <div class="fact-label">с этого года<br>радуем гостей</div>
+            </div>
+            <div class="fact-card">
+              <div class="fact-num" data-target="100" data-suffix="%">100%</div>
+              <div class="fact-label">крымские<br>продукты</div>
+            </div>
+            <div class="fact-card">
+              <div class="fact-num" data-target="4.9" data-prefix="★ " data-decimals="1">★ 4.9</div>
+              <div class="fact-label">2045 отзывов<br>на Яндекс.Картах</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-image reveal reveal-delay-2">
+          <img src="МОМО/Щекотихина/IMG_0688.jpeg"
+               alt="Зал МОМО — коралловые подвесные лампы и большие панно с лотосами на тёмно-синем фоне"
+               loading="lazy">
+          <!-- Лотос-декор -->
+          <svg class="lotus-decor top-right" viewBox="0 0 100 100" aria-hidden="true">
+            <ellipse cx="50" cy="60" rx="35" ry="12" fill="#7FB8B0" opacity="0.55"/>
+            <path d="M50 25 C 40 35, 40 50, 50 55 C 60 50, 60 35, 50 25 Z" fill="#E8B6B0"/>
+            <path d="M30 45 C 35 55, 45 60, 50 60" stroke="#5A968D" stroke-width="1.5" fill="none"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ СЕВАСТОПОЛЬСКИЕ СЕЗОНЫ ═══════════ -->
+  <section class="section seasons" id="seasons">
+    <div class="container">
+      <div class="seasons-header reveal">
+        <div>
+          <div class="section-eyebrow">Меню сезона</div>
+          <h2 class="section-title h-italic">Севастопольские сезоны</h2>
+          <p class="section-lead" style="margin-bottom: 0;">Весенний сет: севастопольская кухня — новым языком.</p>
+        </div>
+        <div class="seasons-badge">
+          <span class="badge-dot"></span>
+          <span>Севастопольские сезоны 2026 · участник</span>
+          <a href="https://sevastravel.ru/sevastopolskie-sezony/" target="_blank" rel="noopener noreferrer">подробнее →</a>
+        </div>
+      </div>
+
+      <p class="seasons-microcopy reveal reveal-delay-1">
+        Севастопольская кухня — «благородная»: она выросла из дореволюционных рецептов гостиниц и трактиров. Мы возвращаем её на стол, переосмысленную через современные техники и местные сезонные продукты. Четыре блюда и четыре авторских коктейля — до конца весны.
+      </p>
+
+      <div class="seasons-subhead reveal">— Сет блюд</div>
+      <div class="seasons-grid">
+        <article class="season-card reveal">
+          <div class="season-card-img">
+            <img src="Севастопольские сезоны/rSbrMzWgJDbV5AESAbcb8_kT0FrWQZpbK17DjWaUpLWQb0eAlxBMsRT-X6S0Z0XmmfS9-vrIQRLQLQkBMDFF0cEQ.jpg" alt="Севиче из пеленгаса — рыбное севиче с яблоками и цитрусовым соусом на стеклянной тарелке" loading="lazy">
+          </div>
+          <div class="season-card-body">
+            <h3 class="season-card-title">Севиче из пеленгаса</h3>
+            <p class="season-card-desc">Яблоки из села Родного, огурцы, остро-сладкий цитрусовый соус</p>
+            <div class="season-card-foot">
+              <span class="gram">185 г</span>
+              <span class="price">645 ₽</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="season-card reveal reveal-delay-1">
+          <div class="season-card-img">
+            <img src="Севастопольские сезоны/v2IbiidV56U-dlTZP5GfRMUSIDUykfpwbNaNGh_wXxIW6SOmcLqLd-8XHj3ySYUy_sk4HJZb0ID6Hzc3Ea-vONip.jpg" alt="Битки по-Севастопольски — свиные битки в кляре с овощами и сметанным соусом" loading="lazy">
+          </div>
+          <div class="season-card-body">
+            <h3 class="season-card-title">Битки по-Севастопольски</h3>
+            <p class="season-card-desc">Свиная отбивная, молочный кляр, зелёный микс, черри, ялтинский лук, соус «перечная сметана»</p>
+            <div class="season-card-foot">
+              <span class="gram">280 г</span>
+              <span class="price">685 ₽</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="season-card reveal reveal-delay-2">
+          <div class="season-card-img">
+            <img src="Севастопольские сезоны/M9Hw61ZJK6PnhEBsQ1uxKfOCNy1djQVC_3cZvBmNO5F0gKkUcq9L-60I0U_x9roIgF2VnUDnp2Ecs00YhpeqFcBO.jpg" alt="Соль-Сисоль — историческое блюдо: запечённое филе пеленгаса в кремовом соусе с гратеном" loading="lazy">
+          </div>
+          <div class="season-card-body">
+            <h3 class="season-card-title">Соль-Сисоль</h3>
+            <p class="season-card-desc">Запечённое филе пеленгаса, картофельный гратен, сливочный соус из фиников, яблок и лука. <em>Историческое блюдо гостиницы «Кистъ».</em></p>
+            <div class="season-card-foot">
+              <span class="gram">230 г</span>
+              <span class="price">725 ₽</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="season-card reveal reveal-delay-3">
+          <div class="season-card-img">
+            <img src="Севастопольские сезоны/4jwFNolvsQSu_8_vZpGjiS9WkJatUQVcMCtIIQuHO4AlHedOABKP_-aXzfhhVo68wJvHltMIqkpmbes-WVM427RE.jpg" alt="Лавандовое безе с морской солью — десерт с кремом из пастернака в бокале" loading="lazy">
+          </div>
+          <div class="season-card-body">
+            <h3 class="season-card-title">Лавандовое безе с морской солью</h3>
+            <p class="season-card-desc">Крем из печёного пастернака, грецкий орех</p>
+            <div class="season-card-foot">
+              <span class="gram">85 г</span>
+              <span class="price">385 ₽</span>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="seasons-subhead reveal" style="margin-top: 56px;">— Авторские коктейли · 525 ₽ каждый</div>
+      <div class="seasons-grid">
+        <article class="season-card reveal">
+          <div class="season-card-img">
+            <img src="Севастопольские сезоны/fQ4VYMwsYtFQoZwogJcId2hND6vzYcCzVHHgDzT71w1-BKZcXK3p7empy1m0Dk2z1hIdX-UY9EFtZrBnkSOEYbKm.jpg" alt="Четыре авторских коктейля сета на розовом шёлке" loading="lazy">
+          </div>
+          <div class="season-card-body">
+            <h3 class="season-card-title">Миндаль</h3>
+            <p class="season-card-desc">Пряный ром, кордиал те-гуань-инь – фейхоа, миндальный сироп, лимон, белок, лепестки миндаля</p>
+            <div class="season-card-foot">
+              <span class="gram">авторский</span>
+              <span class="price">525 ₽</span>
+            </div>
+          </div>
+        </article>
+        <article class="season-card reveal reveal-delay-1">
+          <div class="season-card-img" style="background: linear-gradient(135deg, var(--pink-soft), var(--pink)); display: flex; align-items: center; justify-content: center;">
+            <span style="font-family: var(--font-serif); font-style: italic; font-size: 48px; color: var(--navy);">Магнолия</span>
+          </div>
+          <div class="season-card-body">
+            <h3 class="season-card-title">Магнолия</h3>
+            <p class="season-card-desc">Малиновый джин, брют, кордиал пало-санто, лимон, сироп из розы</p>
+            <div class="season-card-foot">
+              <span class="gram">авторский</span>
+              <span class="price">525 ₽</span>
+            </div>
+          </div>
+        </article>
+        <article class="season-card reveal reveal-delay-2">
+          <div class="season-card-img" style="background: linear-gradient(135deg, var(--velvet), var(--velvet-deep)); display: flex; align-items: center; justify-content: center;">
+            <span style="font-family: var(--font-serif); font-style: italic; font-size: 48px; color: var(--pink);">Мак</span>
+          </div>
+          <div class="season-card-body">
+            <h3 class="season-card-title">Мак</h3>
+            <p class="season-card-desc">Джин на одуванчике, ликёр какао, ангостура, гранатовый кордиал, сироп из грецкого ореха</p>
+            <div class="season-card-foot">
+              <span class="gram">авторский</span>
+              <span class="price">525 ₽</span>
+            </div>
+          </div>
+        </article>
+        <article class="season-card reveal reveal-delay-3">
+          <div class="season-card-img" style="background: linear-gradient(135deg, var(--oak), #C7A57F); display: flex; align-items: center; justify-content: center;">
+            <span style="font-family: var(--font-serif); font-style: italic; font-size: 48px; color: var(--navy);">Каштан</span>
+          </div>
+          <div class="season-card-body">
+            <h3 class="season-card-title">Каштан</h3>
+            <p class="season-card-desc">Сливочный ликёр, сливки, эспрессо, сироп из каштана</p>
+            <div class="season-card-foot">
+              <span class="gram">авторский</span>
+              <span class="price">525 ₽</span>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="seasons-cta-card reveal">
+        <div>
+          <h3>Забронировать стол на сезонный ужин</h3>
+          <p>Скажите администратору, что хотите сезонный сет — забронируем у окна.</p>
+        </div>
+        <a href="tel:+79788557554" class="btn btn-primary btn-lg">📞 +7 978 855‑75‑54</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ МЕНЮ — КУХНЯ ═══════════ -->
+  <section class="section menu-kitchen" id="kitchen">
+    <div class="container">
+      <div class="reveal">
+        <div class="section-eyebrow">Кухня</div>
+        <h2 class="section-title h-italic">Авторская современная кухня на&nbsp;крымских продуктах</h2>
+      </div>
+
+      <div class="tabs reveal" role="tablist" aria-label="Подкатегории меню">
+        <button class="tab active" data-cat="appetizers" role="tab" aria-selected="true">Закуски</button>
+        <button class="tab" data-cat="salads" role="tab">Салаты</button>
+        <button class="tab" data-cat="soups" role="tab">Супы</button>
+        <button class="tab" data-cat="pastas" role="tab">Пасты</button>
+        <button class="tab" data-cat="meat" role="tab">Мясо</button>
+        <button class="tab" data-cat="fish" role="tab">Рыба</button>
+        <button class="tab" data-cat="pizza" role="tab">Римская пицца</button>
+        <button class="tab" data-cat="desserts" role="tab">Десерты</button>
+      </div>
+
+      <div class="dishes-grid reveal" id="dishes-grid">
+        <!-- Заполняется JS -->
+      </div>
+
+      <div class="menu-foot reveal">
+        <a href="#" class="btn btn-outline" onclick="alert('Полное PDF-меню — добавьте файл и обновите ссылку'); return false;">
+          📄 Открыть полное меню (PDF)
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ МЕНЮ — БАР ═══════════ -->
+  <section class="section bar-section" id="bar">
+    <div class="container">
+      <div class="reveal">
+        <div class="section-eyebrow">Бар</div>
+        <h2 class="section-title h-italic">Авторские коктейли, согревающие&nbsp;напитки и&nbsp;крымские&nbsp;вина</h2>
+      </div>
+
+      <h3 class="reveal" style="margin: 32px 0 16px;">Авторские коктейли</h3>
+      <div class="bar-cocktails reveal">
+        <div class="cocktail">
+          <div>
+            <div class="cocktail-name">Май Тай</div>
+            <div class="cocktail-comp">Белый и тёмный ром, ананасовый и апельсиновый соки, лайм, оршад, трипл сек</div>
+          </div>
+          <div>
+            <div class="cocktail-price">785 ₽</div>
+            <div class="cocktail-volume">400 мл</div>
+          </div>
+        </div>
+        <div class="cocktail">
+          <div><div class="cocktail-name">Кровавая Мэри</div><div class="cocktail-comp">Водка, томатный сок, лимон, табаско, ворчестер</div></div>
+          <div><div class="cocktail-price">605 ₽</div><div class="cocktail-volume">400 мл</div></div>
+        </div>
+        <div class="cocktail">
+          <div><div class="cocktail-name">Виски Сауэр</div><div class="cocktail-comp">Бурбон, ангостура, сахарный сироп, белок, лимон</div></div>
+          <div><div class="cocktail-price">625 ₽</div><div class="cocktail-volume">250 мл</div></div>
+        </div>
+        <div class="cocktail">
+          <div><div class="cocktail-name">Маргарита</div><div class="cocktail-comp">Текила, куантро, лайм</div></div>
+          <div><div class="cocktail-price">625 ₽</div><div class="cocktail-volume">200 мл</div></div>
+        </div>
+        <div class="cocktail">
+          <div><div class="cocktail-name">Эспрессо Мартини</div><div class="cocktail-comp">Водка, кофейный ликёр, ваниль, эспрессо</div></div>
+          <div><div class="cocktail-price">625 ₽</div><div class="cocktail-volume">200 мл</div></div>
+        </div>
+        <div class="cocktail">
+          <div><div class="cocktail-name">Негрони</div><div class="cocktail-comp">Джин, красный вермут, кампари</div></div>
+          <div><div class="cocktail-price">625 ₽</div><div class="cocktail-volume">200 мл</div></div>
+        </div>
+        <div class="cocktail">
+          <div><div class="cocktail-name">Мадам Априкот</div><div class="cocktail-comp">Абрикосовый самограй, белый вермут, пало-санто-ваниль, лимон, белок</div></div>
+          <div><div class="cocktail-price">685 ₽</div><div class="cocktail-volume">200 мл</div></div>
+        </div>
+        <div class="cocktail">
+          <div><div class="cocktail-name">Белое Крыло</div><div class="cocktail-comp">Самограй груша, игристое, лимон, кордиал яблоко-саган-дайля</div></div>
+          <div><div class="cocktail-price">685 ₽</div><div class="cocktail-volume">180 мл</div></div>
+        </div>
+        <div class="cocktail">
+          <div><div class="cocktail-name">Травяной Сбор</div><div class="cocktail-comp">Самограй хербал, имбирь-вербена, травяной биттер, лимон</div></div>
+          <div><div class="cocktail-price">685 ₽</div><div class="cocktail-volume">200 мл</div></div>
+        </div>
+        <div class="cocktail">
+          <div><div class="cocktail-name">Арбузный Джин</div><div class="cocktail-comp">Джин, ред булл арбуз, лимон</div></div>
+          <div><div class="cocktail-price">685 ₽</div><div class="cocktail-volume">200 мл</div></div>
+        </div>
+      </div>
+
+      <div class="warm-drinks reveal">
+        <h3>Согревающие безалкогольные</h3>
+        <div class="warm-drinks-grid">
+          <div class="warm-drink"><span class="warm-drink-name">Раф с крымскими травами</span><span class="warm-drink-price">295 ₽</span></div>
+          <div class="warm-drink"><span class="warm-drink-name">Капучино (можжевельник / орех-чёрная соль)</span><span class="warm-drink-price">295 ₽</span></div>
+          <div class="warm-drink"><span class="warm-drink-name">Сливочный эгг-ног</span><span class="warm-drink-price">385 ₽</span></div>
+          <div class="warm-drink"><span class="warm-drink-name">Пунш Апельсин-Брусника</span><span class="warm-drink-price">385 ₽</span></div>
+          <div class="warm-drink"><span class="warm-drink-name">Чай Малина-Базилик</span><span class="warm-drink-price">425 ₽</span></div>
+          <div class="warm-drink"><span class="warm-drink-name">Чай Смородина-Гранат</span><span class="warm-drink-price">425 ₽</span></div>
+        </div>
+      </div>
+
+      <div class="wine-block reveal">
+        <h3>Вино</h3>
+        <p class="wine-quote">Вино, которое не стесняется своего региона: крымские самородки на одной странице с классикой Старого Света.</p>
+        <p style="font-size: 15px; color: var(--ink-soft); margin-bottom: 24px;">10+ позиций по бокалам, акцент на крымских винодельнях.</p>
+        <a href="#" class="btn btn-outline" onclick="alert('PDF карта вин — добавьте файл и обновите ссылку'); return false;">📄 Открыть карту вин (PDF)</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ ДЕТСКОЕ МЕНЮ ═══════════ -->
+  <section class="section kids-section" id="kids-menu">
+    <svg class="kids-decor sun" viewBox="0 0 100 100" aria-hidden="true">
+      <circle cx="50" cy="50" r="22" fill="#FFD56B"/>
+      <g stroke="#FFD56B" stroke-width="3" stroke-linecap="round">
+        <line x1="50" y1="8" x2="50" y2="18"/><line x1="50" y1="82" x2="50" y2="92"/>
+        <line x1="8" y1="50" x2="18" y2="50"/><line x1="82" y1="50" x2="92" y2="50"/>
+        <line x1="20" y1="20" x2="27" y2="27"/><line x1="73" y1="73" x2="80" y2="80"/>
+        <line x1="80" y1="20" x2="73" y2="27"/><line x1="27" y1="73" x2="20" y2="80"/>
+      </g>
+    </svg>
+    <svg class="kids-decor fish" viewBox="0 0 120 80" aria-hidden="true">
+      <ellipse cx="55" cy="40" rx="38" ry="22" fill="#FF8B6E"/>
+      <polygon points="93,40 115,18 115,62" fill="#FF8B6E"/>
+      <circle cx="40" cy="34" r="3" fill="#FFFFFF"/>
+    </svg>
+    <svg class="kids-decor boat" viewBox="0 0 100 80" aria-hidden="true">
+      <polygon points="50,8 50,55 22,55" fill="#FFFFFF"/>
+      <polygon points="55,15 78,55 55,55" fill="#FFD56B"/>
+      <rect x="15" y="55" width="70" height="14" rx="3" fill="#1F3045"/>
+    </svg>
+
+    <div class="container">
+      <div class="reveal">
+        <div class="section-eyebrow">Маленьким гостям</div>
+        <h2 class="section-title h-italic">Любимые хиты для&nbsp;детей</h2>
+        <p class="section-lead">Своя визуальная подача, отдельный буклет, любимые мультики на планшете и стульчики для самых маленьких.</p>
+      </div>
+
+      <div class="kids-menu-grid reveal">
+        <div class="kids-item"><span class="kids-item-name">Суп куриный с бантиками</span><span class="kids-item-gram">250 г</span><span class="kids-item-price">325 ₽</span></div>
+        <div class="kids-item"><span class="kids-item-name">Суп-пюре с курицей и овощами</span><span class="kids-item-gram">250 г</span><span class="kids-item-price">325 ₽</span></div>
+        <div class="kids-item"><span class="kids-item-name">Чизбургер с курицей + фри</span><span class="kids-item-gram">350 г</span><span class="kids-item-price">485 ₽</span></div>
+        <div class="kids-item"><span class="kids-item-name">Куриная котлета с пюре</span><span class="kids-item-gram">250 г</span><span class="kids-item-price">365 ₽</span></div>
+        <div class="kids-item"><span class="kids-item-name">Куриная котлета с макаронами</span><span class="kids-item-gram">250 г</span><span class="kids-item-price">365 ₽</span></div>
+        <div class="kids-item"><span class="kids-item-name">Куриные сосиски с макаронами</span><span class="kids-item-gram">250 г</span><span class="kids-item-price">365 ₽</span></div>
+        <div class="kids-item"><span class="kids-item-name">Судак с картофельным пюре</span><span class="kids-item-gram">250 г</span><span class="kids-item-price">375 ₽</span></div>
+        <div class="kids-item"><span class="kids-item-name">Разноцветные пельмени с мясом</span><span class="kids-item-gram">170 г</span><span class="kids-item-price">325 ₽</span></div>
+        <div class="kids-item"><span class="kids-item-name">Наггетсы куриные с кетчупом</span><span class="kids-item-gram">170 г</span><span class="kids-item-price">365 ₽</span></div>
+        <div class="kids-item"><span class="kids-item-name">Пицца Маргарита</span><span class="kids-item-gram">400 г</span><span class="kids-item-price">565 ₽</span></div>
+        <div class="kids-item"><span class="kids-item-name">Картошка фри с кетчупом</span><span class="kids-item-gram">170 г</span><span class="kids-item-price">325 ₽</span></div>
+        <div class="kids-item"><span class="kids-item-name">Овощные палочки + цезарь</span><span class="kids-item-gram">170 г</span><span class="kids-item-price">225 ₽</span></div>
+        <div class="kids-item"><span class="kids-item-name">Пышные блинчики</span><span class="kids-item-gram">210 г</span><span class="kids-item-price">325 ₽</span></div>
+        <div class="kids-item"><span class="kids-item-name">Мороженое 1 шарик</span><span class="kids-item-gram">50 г</span><span class="kids-item-price">95 ₽</span></div>
+      </div>
+
+      <p class="kids-note reveal">
+        Для семей с детьми у нас есть и кое-что ещё — <a href="#families">читать в следующей секции</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════ ИНТЕРЬЕР И ТЕРРАСА ═══════════ -->
+  <section class="section gallery-section" id="gallery">
+    <div class="container">
+      <p class="gallery-quote reveal">
+        Когда садишься у окна — за окном бухта, в окнах — закат,<br>
+        а в зале — мягкий свет и Эртль Гарнер.
+      </p>
+      <div class="gallery">
+        <div class="gallery-item size-big reveal" data-img="МОМО/Щекотихина/IMG_0688.jpeg">
+          <img src="МОМО/Щекотихина/IMG_0688.jpeg" alt="Зал МОМО — лотосовые панно и коралловые лампы" loading="lazy">
+        </div>
+        <div class="gallery-item reveal reveal-delay-1" data-img="МОМО/IMG_0717.jpeg">
+          <img src="МОМО/IMG_0717.jpeg" alt="Терраса МОМО на закате с видом на бухту" loading="lazy">
+        </div>
+        <div class="gallery-item reveal reveal-delay-2" data-img="МОМО/IMG_6191.jpeg">
+          <img src="МОМО/IMG_6191.jpeg" alt="Гость с бокалом на террасе на закате" loading="lazy">
+        </div>
+        <div class="gallery-item size-tall reveal" data-img="МОМО/Щекотихина/IMG_0691.jpeg">
+          <img src="МОМО/Щекотихина/IMG_0691.jpeg" alt="Уютный угол зала с диванами" loading="lazy">
+        </div>
+        <div class="gallery-item size-wide reveal reveal-delay-1" data-img="МОМО/Щекотихина/IMG_0690.jpeg">
+          <img src="МОМО/Щекотихина/IMG_0690.jpeg" alt="Меню МОМО в руках гостьи" loading="lazy">
+        </div>
+        <div class="gallery-item reveal reveal-delay-2" data-img="МОМО/Щекотихина/IMG_0692.jpeg">
+          <img src="МОМО/Щекотихина/IMG_0692.jpeg" alt="Деталь интерьера МОМО" loading="lazy">
+        </div>
+        <div class="gallery-item reveal reveal-delay-3" data-img="МОМО/Щекотихина/IMG_0350.jpeg">
+          <img src="МОМО/Щекотихина/IMG_0350.jpeg" alt="Деталь интерьера" loading="lazy">
+        </div>
+        <div class="gallery-item reveal reveal-delay-4" data-img="МОМО/Щекотихина/IMG_0694.jpeg">
+          <img src="МОМО/Щекотихина/IMG_0694.jpeg" alt="Атмосфера ресторана" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ ДЛЯ СЕМЕЙ С ДЕТЬМИ ═══════════ -->
+  <section class="section families-section" id="families">
+    <div class="container">
+      <div class="reveal">
+        <div class="section-eyebrow">Для семей с детьми</div>
+        <h2 class="section-title h-italic">Гостям с детьми — у&nbsp;нас удобно</h2>
+        <p class="section-lead">Дети заняты — взрослые в покое. Мы продумали то, что обычно остаётся за кадром.</p>
+      </div>
+
+      <div class="families-grid">
+        <div class="family-item reveal">
+          <div class="family-icon">🎨</div>
+          <div class="family-title">Детская комната</div>
+          <div class="family-desc">Раскраски, игрушки и мультики на планшете</div>
+        </div>
+        <div class="family-item reveal reveal-delay-1">
+          <div class="family-icon">🪑</div>
+          <div class="family-title">Стульчики и пелёнки</div>
+          <div class="family-desc">Всё нужное для самых маленьких — попросите при бронировании</div>
+        </div>
+        <div class="family-item reveal reveal-delay-2">
+          <div class="family-icon">🌅</div>
+          <div class="family-title">Места у окна</div>
+          <div class="family-desc">Бухта, проплывающие лодки, чайки — есть что показать ребёнку</div>
+        </div>
+        <div class="family-item reveal reveal-delay-3">
+          <div class="family-icon">👨‍🍳</div>
+          <div class="family-title">Мастер-классы</div>
+          <div class="family-desc">Кулинарные занятия для детей по сезонам</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ БАНКЕТЫ ═══════════ -->
+  <section class="section banket-section" id="banket">
+    <div class="mesh-bg" aria-hidden="true"></div>
+    <div class="container">
+      <div class="banket-grid">
+        <div class="reveal">
+          <div class="section-eyebrow">Банкеты и торжества</div>
+          <h2 class="section-title h-italic">Свадьбы, юбилеи, семейные встречи</h2>
+
+          <div class="banket-text">
+            <p>МОМО — место, в которое возвращаются всю жизнь. Мы помогаем провести свадьбу, годовщину, день рождения, выпускной или поминальный обед. Большой стол у окна на 20 человек, банкетное меню под формат вашего события, фоновая музыка по запросу.</p>
+          </div>
+
+          <ul class="banket-features">
+            <li>Залы на 10–40 гостей с видом на бухту</li>
+            <li>Банкетное меню под бюджет и формат</li>
+            <li>Декор: цветы, шары, рассадка — по согласованию</li>
+            <li>Возможность тихого банкета — отдельный стол, без музыки</li>
+          </ul>
+        </div>
+
+        <div class="banket-cta-card reveal reveal-delay-2">
+          <h3>Позвонить администратору</h3>
+          <p class="microcopy">Расскажите формат — подберём предложение за день.</p>
+          <a href="tel:+79788557554" class="banket-tel-big">+7 978 855‑75‑54</a>
+          <a href="tel:+79788557554" class="btn btn-primary btn-block">📞 Обсудить торжество</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ FAQ ═══════════ -->
+  <section class="section faq-section" id="faq">
+    <div class="container">
+      <div class="reveal" style="text-align: center;">
+        <div class="section-eyebrow">FAQ</div>
+        <h2 class="section-title h-italic" style="margin-bottom: 48px;">Частые вопросы</h2>
+      </div>
+
+      <div class="faq-list">
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">
+            <span>Можно ли с детьми? Есть ли детская комната?</span>
+            <span class="plus" aria-hidden="true"></span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">Да, конечно. У нас есть детская комната с раскрасками, стульчики для самых маленьких, пелёнки и любимые мультики на планшете. Места у окна — чтобы было что показать ребёнку. Детское меню — отдельный буклет, см. секцию выше.</div></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">
+            <span>Где припарковаться?</span>
+            <span class="plus" aria-hidden="true"></span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">Платная парковка на Приморском бульваре в 2–3 минутах от входа. По выходным заполняется быстро — закладывайте 5–10 минут на поиск места.</div></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">
+            <span>Как отменить или перенести бронь?</span>
+            <span class="plus" aria-hidden="true"></span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">Позвоните по тому же номеру +7 978 855-75-54. Бесплатная отмена — не позднее чем за 4 часа до визита. На банкеты — отдельные условия, обсуждаются при бронировании.</div></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">
+            <span>Что если опаздываем?</span>
+            <span class="plus" aria-hidden="true"></span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">Стол держим 20 минут после забронированного времени. Если опаздываете больше — позвоните, мы постараемся подвинуть бронь, особенно в будние дни.</div></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">
+            <span>До скольки работает кухня?</span>
+            <span class="plus" aria-hidden="true"></span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">Кухня принимает заказы до 22:30. Бар работает до 23:00.</div></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">
+            <span>Есть ли веганские или постные блюда?</span>
+            <span class="plus" aria-hidden="true"></span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">Да. В меню есть вегетарианские позиции — отмечены в карточках. В дни постов вводим отдельный постный сет — спросите у администратора.</div></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">
+            <span>Можно ли с животными?</span>
+            <span class="plus" aria-hidden="true"></span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">С небольшими питомцами — на летнюю террасу, в переноске или на руках. В зал, к сожалению, не пускаем.</div></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">
+            <span>Принимаете банковские карты / СБП?</span>
+            <span class="plus" aria-hidden="true"></span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">Да, карты любых банков и оплата по СБП. Наличные — тоже принимаем.</div></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">
+            <span>Делаете ли банкеты — свадьбы, юбилеи, поминки?</span>
+            <span class="plus" aria-hidden="true"></span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">Да, регулярно. Залы на 10–40 человек, банкетное меню под формат, декор по согласованию. Подробнее — в секции <a href="#banket" style="color: var(--coral);">«Банкеты и торжества»</a> выше.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ КОНТАКТЫ И КАРТА ═══════════ -->
+  <section class="section contacts-section" id="contacts">
+    <div class="container">
+      <div class="reveal" style="text-align: center;">
+        <div class="section-eyebrow">Контакты</div>
+        <h2 class="section-title h-italic" style="margin-bottom: 48px;">Где нас найти</h2>
+      </div>
+
+      <div class="contacts-grid">
+        <div class="contacts-info reveal">
+          <div class="contact-row">
+            <div class="contact-icon">📍</div>
+            <div class="contact-content">
+              <div class="contact-label">Адрес</div>
+              <div class="contact-value">г. Севастополь,<br>проспект Нахимова, 2А</div>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="contact-icon">🕒</div>
+            <div class="contact-content">
+              <div class="contact-label">Часы работы</div>
+              <div class="contact-value">10:00 — 23:00<br>без выходных</div>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="contact-icon">📞</div>
+            <div class="contact-content">
+              <div class="contact-label">Телефон</div>
+              <div class="contact-value"><a href="tel:+79788557554">+7 (978) 855‑75‑54</a></div>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="contact-icon">💬</div>
+            <div class="contact-content">
+              <div class="contact-label">Соцсети</div>
+              <div class="contact-socials">
+                <a href="https://vk.com/momocafe" target="_blank" rel="noopener noreferrer" aria-label="ВКонтакте">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M13.162 18.994c.609 0 .858-.406.851-.915-.031-1.917.714-2.949 2.059-1.604 1.488 1.488 1.796 2.519 3.603 2.519h3.2c.808 0 1.126-.26 1.126-.668 0-.863-1.421-2.386-2.625-3.504-1.686-1.565-1.765-1.602-.313-3.486 1.801-2.339 4.157-5.336 2.073-5.336h-3.981c-.772 0-.828.435-1.103 1.083-.995 2.347-2.886 5.387-3.604 4.922-.751-.486-.407-2.406-.35-5.261.015-.754.011-1.271-1.141-1.539-.629-.145-1.241-.205-1.809-.205-2.273 0-3.841.953-2.95 1.119 1.571.293 1.42 3.692 1.054 5.16-.638 2.556-3.036-2.024-4.035-4.305-.241-.548-.315-.974-1.175-.974h-3.255c-.492 0-.787.16-.787.516 0 .602 2.96 6.72 5.786 9.77 2.756 2.975 5.48 2.708 7.376 2.708z"/></svg>
+                </a>
+                <a href="https://www.instagram.com/momosevas/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-actions">
+            <a href="https://yandex.ru/maps/?text=Севастополь, проспект Нахимова, 2А&rtext=~44.617133,33.522417" target="_blank" rel="noopener noreferrer" class="btn btn-outline">🧭 Построить маршрут</a>
+            <a href="tel:+79788557554" class="btn btn-primary">📞 Забронировать</a>
+          </div>
+        </div>
+
+        <div class="map-wrap reveal reveal-delay-1">
+          <iframe
+            src="https://yandex.ru/map-widget/v1/?ll=33.522417%2C44.617133&mode=search&oid=1141456835&ol=biz&z=16"
+            title="МОМО на Яндекс.Картах"
+            allow="geolocation"
+            loading="lazy">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ ФИНАЛЬНЫЙ CTA ═══════════ -->
+  <section class="final-cta" id="final-cta">
+    <div class="container">
+      <h2 class="reveal">Забронировать стол</h2>
+      <p class="reveal reveal-delay-1">1–2 гудка — и стол ваш.</p>
+
+      <a href="tel:+79788557554" class="final-tel reveal reveal-delay-2">
+        <span class="tel-icon">📞</span>
+        <span>+7 978 855‑75‑54</span>
+      </a>
+
+      <div class="reveal reveal-delay-3">
+        <button class="final-alt" data-modal-open="callback">Или оставьте номер — перезвоним за 15 минут</button>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- ═══════════ ФУТЕР ═══════════ -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="logo">
+            <span class="logo-line"></span>
+            <span class="logo-text">МОМО</span>
+            <span class="logo-line"></span>
+            <span class="logo-tagline">семейный ресторан · с 2013</span>
+          </a>
+          <p class="footer-slogan">Семейный ресторан с&nbsp;видом на&nbsp;море</p>
+          <div class="footer-socials">
+            <a href="https://vk.com/momocafe" target="_blank" rel="noopener noreferrer" aria-label="ВКонтакте">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M13.162 18.994c.609 0 .858-.406.851-.915-.031-1.917.714-2.949 2.059-1.604 1.488 1.488 1.796 2.519 3.603 2.519h3.2c.808 0 1.126-.26 1.126-.668 0-.863-1.421-2.386-2.625-3.504-1.686-1.565-1.765-1.602-.313-3.486 1.801-2.339 4.157-5.336 2.073-5.336h-3.981c-.772 0-.828.435-1.103 1.083-.995 2.347-2.886 5.387-3.604 4.922-.751-.486-.407-2.406-.35-5.261.015-.754.011-1.271-1.141-1.539-.629-.145-1.241-.205-1.809-.205-2.273 0-3.841.953-2.95 1.119 1.571.293 1.42 3.692 1.054 5.16-.638 2.556-3.036-2.024-4.035-4.305-.241-.548-.315-.974-1.175-.974h-3.255c-.492 0-.787.16-.787.516 0 .602 2.96 6.72 5.786 9.77 2.756 2.975 5.48 2.708 7.376 2.708z"/></svg>
+            </a>
+            <a href="https://www.instagram.com/momosevas/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <h4>Меню</h4>
+          <ul>
+            <li><a href="#seasons">Севастопольские сезоны</a></li>
+            <li><a href="#kitchen">Кухня</a></li>
+            <li><a href="#bar">Бар</a></li>
+            <li><a href="#kids-menu">Детское меню</a></li>
+            <li><a href="#banket">Банкеты</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Контакты</h4>
+          <ul>
+            <li>Севастополь, Нахимова 2А</li>
+            <li>10:00 — 23:00, без выходных</li>
+            <li><a href="tel:+79788557554">+7 978 855‑75‑54</a></li>
+            <li><a href="#faq">Частые вопросы</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 ООО «До» · ИНН 9204012949 · ОГРН 1149204026333</span>
+        <a href="#" onclick="alert('Страница политики обработки персональных данных. Добавьте полный текст.'); return false;">Политика обработки персональных данных</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════ FLOATING CTA ═══════════ -->
+  <a href="tel:+79788557554" class="float-cta" aria-label="Позвонить и забронировать">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+    </svg>
+  </a>
+
+  <!-- ═══════════ МОДАЛКА «ПЕРЕЗВОНИТЕ МНЕ» ═══════════ -->
+  <div class="modal" id="modal-callback" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal-box">
+      <button class="modal-close" data-modal-close aria-label="Закрыть форму">✕</button>
+
+      <div class="form-content">
+        <h3 id="modal-title">Перезвоните мне</h3>
+        <p class="subtitle">Оставьте номер — администратор перезвонит за 15 минут в рабочее время.</p>
+
+        <form id="callback-form" novalidate>
+          <div class="form-group">
+            <label for="name">Как к вам обращаться?</label>
+            <input type="text" id="name" name="name" placeholder="Имя (необязательно)">
+          </div>
+          <div class="form-group">
+            <label for="phone">Телефон <span style="color: var(--coral);">*</span></label>
+            <input type="tel" id="phone" name="phone" placeholder="+7 (___) ___-__-__" required>
+          </div>
+          <div class="form-group">
+            <label for="when">Когда удобно перезвонить?</label>
+            <select id="when" name="when">
+              <option value="now">Сейчас</option>
+              <option value="hour">В течение часа</option>
+              <option value="evening">Сегодня вечером</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="comment">Комментарий</label>
+            <textarea id="comment" name="comment" placeholder="Детский стул, коляска, день рождения и т.д."></textarea>
+          </div>
+          <label class="form-check">
+            <input type="checkbox" id="consent" required>
+            <span>Я согласен(а) на <a href="#">обработку персональных данных</a> в соответствии с 152-ФЗ</span>
+          </label>
+          <button type="submit" class="btn btn-primary btn-block btn-lg">Отправить</button>
+        </form>
+      </div>
+
+      <div class="form-success" id="form-success">
+        <div class="check">✓</div>
+        <h3>Спасибо!</h3>
+        <p style="color: var(--ink-soft); margin-top: 12px;">Перезвоним в течение 15 минут.<br>А пока — подписывайтесь на наш <a href="#" style="color: var(--coral); text-decoration: underline;">Telegram-канал</a>.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ ЛАЙТБОКС ═══════════ -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-label="Увеличенное фото">
+    <button class="lightbox-close" aria-label="Закрыть">✕</button>
+    <img src="" alt="">
+  </div>
+
+  <!-- ═══════════ COOKIE BANNER ═══════════ -->
+  <div class="cookie-bar" id="cookie-bar">
+    <span>🍪 Мы используем cookie для аналитики и удобства. <a href="#">Подробнее</a></span>
+    <button class="btn btn-primary" id="cookie-accept">Понятно</button>
+  </div>
+
+  <!-- ═══════════ СКРИПТЫ ═══════════ -->
+  <script>
+    // ───── 1. Header shrink on scroll ─────
+    const header = document.getElementById('header');
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.pageYOffset;
+      if (currentScroll > 40) header.classList.add('scrolled');
+      else header.classList.remove('scrolled');
+      lastScroll = currentScroll;
+    }, { passive: true });
+
+    // ───── 2. Scroll-reveal через IntersectionObserver ─────
+    const reveals = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+      reveals.forEach(el => io.observe(el));
+    } else {
+      reveals.forEach(el => el.classList.add('visible'));
+    }
+
+    // ───── 3. FAQ accordion ─────
+    document.querySelectorAll('.faq-q').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.parentElement;
+        const isOpen = item.classList.contains('open');
+        // закрыть остальные
+        document.querySelectorAll('.faq-item.open').forEach(other => {
+          if (other !== item) {
+            other.classList.remove('open');
+            other.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+          }
+        });
+        item.classList.toggle('open');
+        btn.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+      });
+    });
+
+    // ───── 4. Menu tabs (кухня) ─────
+    const dishesData = {
+      appetizers: [
+        { name: 'Филе сельди', desc: 'Запечённый картофель, ялтинский лук', gram: '200 г', price: '565 ₽', allergens: ['рыба'], img: 'МОМО/ваня_апрель2026/Снимок экрана 2026-05-12 в 18.10.39.png' },
+        { name: 'Кусияки из креветок и утиной грудки', desc: 'С можжевельником, глазурь из жжёного мёда', gram: '150 г', price: '825 ₽', allergens: ['моллюски'], img: 'МОМО/ваня_апрель2026/Снимок экрана 2026-05-12 в 18.11.21.png' },
+        { name: 'Мясной сет', desc: 'Ростбиф, свиная вырезка, чоризо, квашеная капуста, огурцы, соусы', gram: '210/60 г', price: '745 ₽', allergens: ['молоко'], img: 'МОМО/ваня_апрель2026/Снимок экрана 2026-05-12 в 18.11.50.png' },
+      ],
+      salads: [
+        { name: 'Цезарь с креветками', desc: 'Романо, пармезан, креветки, чесночные крутоны', gram: '220 г', price: '745 ₽', allergens: ['молоко','моллюски','глютен'], img: 'МОМО/ваня_апрель2026/Снимок экрана 2026-05-12 в 18.12.00.png' },
+        { name: 'Греческий', desc: 'Помидоры, огурцы, фета, оливки, красный лук, оливковое масло', gram: '250 г', price: '525 ₽', allergens: ['молоко'], img: 'МОМО/ваня_апрель2026/Снимок экрана 2026-05-12 в 18.12.11.png' },
+      ],
+      soups: [
+        { name: 'Том Ям с креветками', desc: 'Острый кокосовый бульон, грибы, листья каффира', gram: '320 г', price: '685 ₽', allergens: ['моллюски'], img: 'МОМО/ваня_апрель2026/Снимок экрана 2026-05-12 в 18.12.22.png' },
+        { name: 'Уха по-севастопольски', desc: 'Из пеленгаса, на овощном бульоне, с укропом', gram: '300 г', price: '525 ₽', allergens: ['рыба'], img: '' },
+      ],
+      pastas: [
+        { name: 'Карбонара', desc: 'Бекон, яичный желток, пармезан, чёрный перец', gram: '320 г', price: '625 ₽', allergens: ['молоко','глютен'], img: '' },
+        { name: 'С морепродуктами', desc: 'Креветки, мидии, томатный соус, базилик', gram: '350 г', price: '825 ₽', allergens: ['моллюски','глютен'], img: '' },
+      ],
+      meat: [
+        { name: 'Утиная грудка', desc: 'С розмарином, картофельным пюре и сливочным соусом', gram: '230 г', price: '1190 ₽', allergens: ['молоко'], img: 'МОМО/ваня_апрель2026/Снимок экрана 2026-05-12 в 18.12.28.png' },
+        { name: 'Битки по-севастопольски', desc: 'Свиная отбивная, молочный кляр, перечная сметана', gram: '280 г', price: '685 ₽', allergens: ['молоко','глютен'], img: '' },
+      ],
+      fish: [
+        { name: 'Пеленгас на гриле', desc: 'С пюре из печёного баклажана и лимонным соусом', gram: '200 г', price: '1290 ₽', allergens: ['рыба'], img: 'МОМО/ваня_апрель2026/Снимок экрана 2026-05-12 в 18.13.05.png' },
+        { name: 'Соль-Сисоль', desc: 'Запечённое филе пеленгаса с гратеном — историческое блюдо', gram: '230 г', price: '725 ₽', allergens: ['рыба','молоко'], img: 'МОМО/ваня_апрель2026/Снимок экрана 2026-05-12 в 18.13.24.png' },
+        { name: 'Севиче из пеленгаса', desc: 'Яблоки, огурцы, остро-сладкий цитрусовый соус', gram: '185 г', price: '645 ₽', allergens: ['рыба'], img: '' },
+      ],
+      pizza: [
+        { name: 'Мясная', desc: 'Свиная корейка, мортаделла, шампиньоны, пармезан, томатный соус', gram: '400 г', price: '895 ₽', allergens: ['молоко','глютен'], img: 'МОМО/ваня_апрель2026/Снимок экрана 2026-05-12 в 18.13.43.png' },
+        { name: 'С креветками, грушей и дорблю', desc: 'Чеддер, моцарелла', gram: '380 г', price: '925 ₽', allergens: ['молоко','глютен','моллюски'], img: 'МОМО/ваня_апрель2026/Снимок экрана 2026-05-12 в 18.17.31.png' },
+        { name: 'Маргарита', desc: 'Моцарелла, томатный соус, базилик', gram: '380 г', price: '625 ₽', allergens: ['молоко','глютен'], img: 'МОМО/ваня_апрель2026/Снимок экрана 2026-05-12 в 18.18.30.png' },
+      ],
+      desserts: [
+        { name: 'Лавандовое безе с морской солью', desc: 'Крем из печёного пастернака, грецкий орех', gram: '85 г', price: '385 ₽', allergens: ['орехи','яйцо'], img: '' },
+        { name: 'Чернильный фондан', desc: 'Шоколад, морская соль, ванильное мороженое', gram: '180 г', price: '485 ₽', allergens: ['молоко','глютен','яйцо'], img: '' },
+      ]
+    };
+
+    function renderDishes(category) {
+      const grid = document.getElementById('dishes-grid');
+      const items = dishesData[category] || [];
+      grid.innerHTML = items.map(d => `
+        <article class="dish-card">
+          <div class="dish-card-img">
+            ${d.img
+              ? `<img src="${d.img}" alt="${d.name}" loading="lazy">`
+              : `<div style="display: flex; align-items: center; justify-content: center; height: 100%; color: var(--ink-soft); font-family: var(--font-serif); font-style: italic; font-size: 22px; padding: 24px; text-align: center;">${d.name}</div>`
+            }
+          </div>
+          <div class="dish-card-body">
+            <div class="dish-card-name">${d.name}</div>
+            <div class="dish-card-desc">${d.desc}</div>
+            <div class="dish-card-foot">
+              <div class="allergens" title="Аллергены">
+                ${d.allergens.map(a => `<span class="allergen" title="${a}">${a[0].toUpperCase()}</span>`).join('')}
+              </div>
+              <div style="display: flex; flex-direction: column; align-items: flex-end;">
+                <span class="price" style="font-size: 18px;">${d.price}</span>
+                <span class="gram" style="font-size: 11px;">${d.gram}</span>
+              </div>
+            </div>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+        renderDishes(tab.dataset.cat);
+      });
+    });
+    renderDishes('appetizers');
+
+    // ───── 5. Модалка «Перезвоните мне» ─────
+    const modal = document.getElementById('modal-callback');
+    document.querySelectorAll('[data-modal-open]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => document.getElementById('phone').focus(), 250);
+      });
+    });
+    function closeModal() {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      // reset form on close
+      setTimeout(() => {
+        document.querySelector('.form-content').style.display = 'block';
+        document.getElementById('form-success').classList.remove('active');
+        document.getElementById('callback-form').reset();
+      }, 300);
+    }
+    document.querySelectorAll('[data-modal-close]').forEach(b => b.addEventListener('click', closeModal));
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
+
+    // Маска телефона
+    const phoneInput = document.getElementById('phone');
+    phoneInput.addEventListener('input', (e) => {
+      let value = e.target.value.replace(/\D/g, '');
+      if (value.length === 0) { e.target.value = ''; return; }
+      if (value[0] === '8') value = '7' + value.slice(1);
+      if (value[0] !== '7') value = '7' + value;
+      value = value.slice(0, 11);
+      let formatted = '+7';
+      if (value.length > 1) formatted += ' (' + value.slice(1, 4);
+      if (value.length >= 5) formatted += ') ' + value.slice(4, 7);
+      if (value.length >= 8) formatted += '-' + value.slice(7, 9);
+      if (value.length >= 10) formatted += '-' + value.slice(9, 11);
+      e.target.value = formatted;
+    });
+
+    // Отправка формы
+    document.getElementById('callback-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const phone = phoneInput.value.replace(/\D/g, '');
+      if (phone.length !== 11) {
+        phoneInput.style.borderColor = 'var(--coral)';
+        phoneInput.focus();
+        return;
+      }
+      if (!document.getElementById('consent').checked) {
+        document.getElementById('consent').focus();
+        return;
+      }
+      // Здесь должна быть отправка на backend
+      // На MVP — показываем подтверждение и логируем в Метрику
+      if (typeof ym !== 'undefined') ym(0, 'reachGoal', 'form_submit_success');
+
+      document.querySelector('.form-content').style.display = 'none';
+      document.getElementById('form-success').classList.add('active');
+      setTimeout(closeModal, 4000);
+    });
+
+    // ───── 6. Лайтбокс ─────
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = lightbox.querySelector('img');
+    document.querySelectorAll('.gallery-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const src = item.dataset.img || item.querySelector('img').src;
+        const alt = item.querySelector('img').alt;
+        lightboxImg.src = src;
+        lightboxImg.alt = alt;
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+    lightbox.addEventListener('click', () => {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox.classList.contains('open')) {
+        lightbox.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    });
+
+    // ───── 7. Cookie banner ─────
+    const cookieBar = document.getElementById('cookie-bar');
+    if (!localStorage.getItem('momo_cookie_accepted')) {
+      setTimeout(() => cookieBar.classList.add('show'), 1500);
+    }
+    document.getElementById('cookie-accept').addEventListener('click', () => {
+      cookieBar.classList.remove('show');
+      localStorage.setItem('momo_cookie_accepted', '1');
+    });
+
+    // ───── 8. Tracking (заглушки для Yandex.Metrica) ─────
+    document.querySelectorAll('a[href^="tel:"]').forEach(link => {
+      link.addEventListener('click', () => {
+        if (typeof ym !== 'undefined') ym(0, 'reachGoal', 'tel_click');
+      });
+    });
+
+    /* ═══════════════════════════════════════════════════════════
+       РАСШИРЕНИЕ: ВАУ-ЭФФЕКТЫ (2026-05-20)
+       ═══════════════════════════════════════════════════════════ */
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const hasHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    // ───── 9. Прогресс-бар скролла ─────
+    const scrollProgress = document.getElementById('scroll-progress');
+    let progressTicking = false;
+    function updateScrollProgress() {
+      const scrollTop = window.pageYOffset;
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+      scrollProgress.style.width = progress + '%';
+      progressTicking = false;
+    }
+    window.addEventListener('scroll', () => {
+      if (!progressTicking) {
+        requestAnimationFrame(updateScrollProgress);
+        progressTicking = true;
+      }
+    }, { passive: true });
+
+    // ───── 10. Параллакс на hero-фоне ─────
+    const heroBg = document.querySelector('.hero-bg img');
+    const heroSection = document.getElementById('hero');
+    let heroTicking = false;
+    function updateHeroParallax() {
+      const scrolled = window.pageYOffset;
+      const heroHeight = heroSection.offsetHeight;
+      if (scrolled < heroHeight * 1.2) {
+        const rate = scrolled * 0.4;
+        const scale = 1.08 + (scrolled / heroHeight) * 0.04;
+        heroBg.style.transform = `scale(${scale}) translateY(${rate}px)`;
+        // Hero content fade out при скролле
+        const opacity = Math.max(0, 1 - (scrolled / heroHeight) * 1.5);
+        const heroContent = document.querySelector('.hero-content');
+        if (heroContent) {
+          heroContent.style.opacity = opacity;
+          heroContent.style.transform = `translateY(${scrolled * 0.2}px)`;
+        }
+      }
+      heroTicking = false;
+    }
+    if (!prefersReducedMotion && heroBg) {
+      window.addEventListener('scroll', () => {
+        if (!heroTicking) {
+          requestAnimationFrame(updateHeroParallax);
+          heroTicking = true;
+        }
+      }, { passive: true });
+    }
+
+    // ───── 11. Letter stagger на hero-заголовке ─────
+    function splitTitle() {
+      if (prefersReducedMotion) return;
+      const title = document.querySelector('.hero-title');
+      if (!title) return;
+      const line1 = title.firstChild;
+      const line2 = title.querySelector('.hero-title-line2');
+      // Первая строка — «МОМО.»
+      const text1 = (line1.textContent || '').trim();
+      const text2 = line2 ? line2.textContent.trim() : '';
+      // Очищаем
+      title.innerHTML = '';
+      // Первая строка
+      const wrap1 = document.createElement('span');
+      [...text1].forEach((ch, i) => {
+        const span = document.createElement('span');
+        span.className = 'char' + (ch === ' ' ? ' space' : '');
+        span.textContent = ch === ' ' ? ' ' : ch;
+        span.style.animationDelay = (i * 0.06) + 's';
+        wrap1.appendChild(span);
+      });
+      title.appendChild(wrap1);
+      // Вторая строка
+      if (text2) {
+        const sub = document.createElement('span');
+        sub.className = 'hero-title-line2';
+        [...text2].forEach((ch, i) => {
+          const span = document.createElement('span');
+          span.className = 'char' + (ch === ' ' ? ' space' : '');
+          span.textContent = ch === ' ' ? ' ' : ch;
+          span.style.animationDelay = (0.4 + i * 0.025) + 's';
+          sub.appendChild(span);
+        });
+        title.appendChild(sub);
+      }
+    }
+    splitTitle();
+
+    // ───── 12. Счётчики цифр (фактоиды) ─────
+    function animateCounter(el) {
+      const target = parseFloat(el.dataset.target);
+      const decimals = parseInt(el.dataset.decimals || '0', 10);
+      const prefix = el.dataset.prefix || '';
+      const suffix = el.dataset.suffix || '';
+      const duration = 1500;
+      const start = performance.now();
+      const startVal = 0;
+      function step(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        // Ease-out cubic
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = startVal + (target - startVal) * eased;
+        el.textContent = prefix + (decimals > 0 ? current.toFixed(decimals) : Math.floor(current)) + suffix;
+        if (progress < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+    if (!prefersReducedMotion && 'IntersectionObserver' in window) {
+      const factObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            animateCounter(entry.target);
+            factObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.5 });
+      document.querySelectorAll('.fact-num[data-target]').forEach(el => factObserver.observe(el));
+    }
+
+    // ───── 13. 3D-tilt на карточках (только desktop) ─────
+    if (hasHover && !prefersReducedMotion) {
+      const tiltTargets = '.segment-card, .season-card, .dish-card, .family-item, .fact-card, .banket-cta-card';
+      document.querySelectorAll(tiltTargets).forEach(card => {
+        let raf;
+        card.addEventListener('mousemove', (e) => {
+          if (raf) cancelAnimationFrame(raf);
+          raf = requestAnimationFrame(() => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = ((y - centerY) / centerY) * -4;
+            const rotateY = ((x - centerX) / centerX) * 4;
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
+            // Для сегмент-карточек — radial-glow на позиции курсора
+            if (card.classList.contains('segment-card')) {
+              card.style.setProperty('--mx', (x / rect.width * 100) + '%');
+              card.style.setProperty('--my', (y / rect.height * 100) + '%');
+            }
+          });
+        });
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = '';
+        });
+      });
+    }
+
+    // ───── 14. Магнетные кнопки ─────
+    if (hasHover && !prefersReducedMotion) {
+      const magneticButtons = document.querySelectorAll('.btn-primary, .btn-outline, .final-tel, .float-cta');
+      magneticButtons.forEach(btn => {
+        let raf;
+        btn.addEventListener('mousemove', (e) => {
+          if (raf) cancelAnimationFrame(raf);
+          raf = requestAnimationFrame(() => {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            const strength = btn.classList.contains('float-cta') ? 0.4 : 0.2;
+            btn.style.transform = `translate(${x * strength}px, ${y * strength * 1.2}px)`;
+          });
+        });
+        btn.addEventListener('mouseleave', () => {
+          btn.style.transform = '';
+        });
+      });
+    }
+
+    // ───── 15. Smooth scroll для якорных ссылок (плавный, с easing) ─────
+    function smoothScrollTo(targetY, duration = 900) {
+      if (prefersReducedMotion) {
+        window.scrollTo(0, targetY);
+        return;
+      }
+      const startY = window.pageYOffset;
+      const diff = targetY - startY;
+      const startTime = performance.now();
+      function step(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // Ease in-out quart
+        const eased = progress < 0.5
+          ? 8 * progress * progress * progress * progress
+          : 1 - Math.pow(-2 * progress + 2, 4) / 2;
+        window.scrollTo(0, startY + diff * eased);
+        if (progress < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        if (href === '#' || href.length < 2) return;
+        const target = document.querySelector(href);
+        if (!target) return;
+        e.preventDefault();
+        const headerOffset = 80;
+        const targetY = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+        smoothScrollTo(targetY, 1000);
+        // обновляем URL без скачка
+        history.pushState(null, '', href);
+      });
+    });
+
+    // ───── 16. Lazy reveal images с clip-path ─────
+    if ('IntersectionObserver' in window) {
+      const imgObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.clipPath = 'inset(0 0 0 0)';
+            imgObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      document.querySelectorAll('.about-image, .season-card-img, .gallery-item').forEach((wrap) => {
+        if (prefersReducedMotion) return;
+        wrap.style.clipPath = 'inset(0 100% 0 0)';
+        wrap.style.transition = 'clip-path 1.1s cubic-bezier(0.2, 0.7, 0.2, 1)';
+        // staggered delay для галереи
+        if (wrap.classList.contains('gallery-item')) {
+          const items = Array.from(document.querySelectorAll('.gallery-item'));
+          const idx = items.indexOf(wrap);
+          wrap.style.transitionDelay = (idx * 0.08) + 's';
+        }
+        imgObserver.observe(wrap);
+      });
+    }
+
+    // ───── 17. Subtle цифровая анимация рейтинга в hero ─────
+    // (Опционально, чтобы рейтинг тоже «оживал»)
+
+    // ───── 18. Header — скрытие при скролле вниз, показ при скролле вверх ─────
+    let lastScrollY = window.pageYOffset;
+    let headerHidden = false;
+    window.addEventListener('scroll', () => {
+      const currentY = window.pageYOffset;
+      const delta = currentY - lastScrollY;
+      // Скрываем только при значительной прокрутке вниз и не на самом верху
+      if (currentY > 200 && delta > 5 && !headerHidden) {
+        header.style.transform = 'translateY(-100%)';
+        headerHidden = true;
+      } else if (delta < -5 && headerHidden) {
+        header.style.transform = 'translateY(0)';
+        headerHidden = false;
+      }
+      lastScrollY = currentY;
+    }, { passive: true });
+    header.style.transition = 'transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1), padding 0.3s cubic-bezier(0.2, 0.7, 0.2, 1), border-color 0.3s ease';
+
+    // ───── 19. Финальный CTA — лёгкая «дышащая» анимация телефона ─────
+    // (CSS-based, уже добавлен в стиле ctaPulse)
+
+  </script>
+
+</body>
+</html>
