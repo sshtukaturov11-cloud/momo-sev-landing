@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <!--
+    Mini App открывается в Telegram webview только на мобильном.
+    viewport-fit=cover нужен для корректного учёта safe-area-inset на iOS.
+  -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#2AABEE">
+  <title>МОМО — семейный ресторан</title>
+
+  <!-- ВАЖНО: Telegram WebApp SDK обязательно ДО наших скриптов -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!--
+  Корневой контейнер приложения. Все экраны лежат поверх друг друга
+  как абсолютно позиционированные слои; видимый — только тот, у кого
+  класс .active. Переходы между экранами анимируются через CSS.
+-->
+<div class="app" id="app">
+
+  <!-- ═══════════════════════════════════════════════════════
+       1. HOME — главный экран
+       ═══════════════════════════════════════════════════════ -->
+  <section class="screen" id="screen-home" data-screen="home">
+    <div class="screen__body">
+
+      <!-- Компактный баннер (140px) — только фото, никакого текста сверху -->
+      <div class="hero" id="hero">
+        <img class="hero__img" id="hero-img" alt="">
+        <div class="hero__overlay" aria-hidden="true"></div>
+      </div>
+
+      <!-- Текстовая «визитка» под баннером: логотип, адрес/часы, рейтинг -->
+      <div class="hero-info">
+        <img class="hero-info__logo" id="hero-logo" alt="МОМО — семейный ресторан с видом на море">
+        <p class="hero-info__sub" id="hero-subtitle">Севастополь · Нахимова 2А · 10:00–23:00</p>
+        <p class="hero-info__social" id="hero-social"></p>
+      </div>
+
+      <!-- Сегменты «Сегодня я…» — 4 плитки в сетке 2×2 -->
+      <div class="segments" id="segments"></div>
+
+      <!-- Полоска «Банкеты» — отдельный CTA -->
+      <button class="stripe" id="stripe-banket">
+        <span>🎉 <strong>Банкеты и торжества</strong> — скажите при звонке</span>
+        <span class="stripe__arrow">›</span>
+      </button>
+
+      <!-- Промо-баннер «Севастопольские сезоны» -->
+      <button class="promo" id="promo-seasons">
+        <img class="promo__img" id="promo-img" alt="">
+        <div class="promo__body">
+          <span class="promo__eyebrow" id="promo-eyebrow">Меню сезона</span>
+          <span class="promo__title">Севастопольские сезоны</span>
+          <span class="promo__sub">4 блюда + 4 коктейля · до конца весны</span>
+        </div>
+      </button>
+
+      <!-- Нижняя текстовая навигация на Home -->
+      <nav class="subnav">
+        <button data-go="gallery">Галерея</button>
+        <button data-go="contacts">Контакты</button>
+      </nav>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       2. МЕНЮ — Кухня (список 8 категорий)
+       ═══════════════════════════════════════════════════════ -->
+  <section class="screen" id="screen-kitchen" data-screen="kitchen">
+    <div class="topbar">
+      <div class="topbar__spacer"></div>
+      <div class="topbar__title">Кухня</div>
+      <div class="topbar__spacer"></div>
+    </div>
+    <div class="screen__body">
+      <p class="microcopy" style="margin: 8px 16px 0; text-align: center;">
+        Авторская кухня на крымских продуктах
+      </p>
+      <div class="cat-list" id="cat-list"></div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       2.1. КАТЕГОРИЯ КУХНИ — список блюд одной категории
+       ═══════════════════════════════════════════════════════ -->
+  <section class="screen" id="screen-category" data-screen="category">
+    <div class="topbar">
+      <div class="topbar__spacer"></div>
+      <div class="topbar__title" id="category-title">Категория</div>
+      <div class="topbar__spacer"></div>
+    </div>
+    <div class="screen__body">
+      <div class="dish-list" id="dish-list"></div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       3. МЕНЮ — Бар
+       ═══════════════════════════════════════════════════════ -->
+  <section class="screen" id="screen-bar" data-screen="bar">
+    <div class="topbar">
+      <div class="topbar__spacer"></div>
+      <div class="topbar__title">Бар</div>
+      <div class="topbar__spacer"></div>
+    </div>
+    <div class="screen__body">
+
+      <p class="section-title">Авторские коктейли</p>
+      <div class="bar-section" id="bar-cocktails"></div>
+
+      <!-- Тёмная плашка — единственный регистр velvet -->
+      <div class="bar-velvet">
+        <h3>Согревающие напитки</h3>
+        <div id="bar-warm"></div>
+      </div>
+
+      <!-- Блок про вино -->
+      <div class="wine-block">
+        <h3 class="wine-block__title">Вино</h3>
+        <p class="wine-block__quote">
+          Вино, которое не стесняется своего региона: крымские самородки на одной странице с классикой Старого Света.
+        </p>
+        <p class="wine-block__hint">10+ позиций по бокалам — спросите у официанта.</p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       4. ДЕТСКОЕ МЕНЮ
+       ═══════════════════════════════════════════════════════ -->
+  <section class="screen" id="screen-kids" data-screen="kids">
+    <div class="topbar">
+      <div class="topbar__spacer"></div>
+      <div class="topbar__title">Маленьким гостям</div>
+      <div class="topbar__spacer"></div>
+    </div>
+    <div class="screen__body">
+
+      <!-- Бирюзовая шапка-плашка как в фирменном буклете -->
+      <div class="kids-hero">
+        <h2>Маленьким гостям</h2>
+        <p>Своя кухня, стульчики, мультики на планшете</p>
+      </div>
+
+      <div class="kids-list" id="kids-list"></div>
+
+      <!-- Что у нас удобно с детьми -->
+      <div class="kids-benefits">
+        <h3>Гостям с детьми — у нас удобно</h3>
+        <ul id="kids-benefits-list"></ul>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       5. СЕЗОННОЕ МЕНЮ — Севастопольские сезоны
+       ═══════════════════════════════════════════════════════ -->
+  <section class="screen" id="screen-seasons" data-screen="seasons">
+    <div class="topbar">
+      <div class="topbar__spacer"></div>
+      <div class="topbar__title">Сезонное меню</div>
+      <div class="topbar__spacer"></div>
+    </div>
+    <div class="screen__body">
+
+      <div class="seasons-header">
+        <span class="seasons-badge" id="seasons-badge"></span>
+        <h2 class="seasons-title" id="seasons-title"></h2>
+        <p class="seasons-season" id="seasons-season"></p>
+      </div>
+
+      <p class="seasons-intro" id="seasons-intro"></p>
+
+      <p class="seasons-subhead">— Сет блюд</p>
+      <div class="seasons-grid" id="seasons-dishes"></div>
+
+      <p class="seasons-subhead">— Коктейли · 525 ₽</p>
+      <div class="seasons-grid" id="seasons-cocktails"></div>
+
+      <button class="seasons-link" id="seasons-link">О фестивале на sevastravel.ru →</button>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       6. ГАЛЕРЕЯ — фото интерьера
+       ═══════════════════════════════════════════════════════ -->
+  <section class="screen" id="screen-gallery" data-screen="gallery">
+    <div class="topbar">
+      <div class="topbar__spacer"></div>
+      <div class="topbar__title">Атмосфера</div>
+      <div class="topbar__spacer"></div>
+    </div>
+    <div class="screen__body">
+      <p class="gallery-quote">
+        За окном — бухта, в зале — мягкий свет и джаз.
+      </p>
+      <div class="gallery-grid" id="gallery-grid"></div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       7. БРОНИРОВАНИЕ — главный конверсионный экран
+       ═══════════════════════════════════════════════════════ -->
+  <section class="screen" id="screen-book" data-screen="book">
+    <div class="topbar">
+      <div class="topbar__spacer"></div>
+      <div class="topbar__title">Забронировать стол</div>
+      <div class="topbar__spacer"></div>
+    </div>
+    <div class="screen__body">
+
+      <!-- Главная плашка: один тап → requestContact -->
+      <div class="book-hero">
+        <div class="book-hero__icon">📞</div>
+        <div class="book-hero__title">Бронь за 1 тап</div>
+        <p class="book-hero__sub">
+          Поделитесь номером — администратор перезвонит<br>в течение 15 минут
+        </p>
+        <button class="book-share" id="book-share">
+          📲 Поделиться номером
+        </button>
+      </div>
+
+      <!-- Альтернативные действия -->
+      <div class="book-alt">
+        <a id="book-call" href="tel:" class="clickable">📞 Позвонить</a>
+        <button id="book-chat" type="button">💬 Чат с админом</button>
+      </div>
+
+      <!-- Доп. инфа -->
+      <p class="book-info">
+        Время работы: <span id="book-hours"></span><br>
+        Стол держим 20 минут после забронированного времени
+      </p>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       8. БАНКЕТЫ
+       ═══════════════════════════════════════════════════════ -->
+  <section class="screen" id="screen-banket" data-screen="banket">
+    <div class="topbar">
+      <div class="topbar__spacer"></div>
+      <div class="topbar__title">Банкеты</div>
+      <div class="topbar__spacer"></div>
+    </div>
+    <div class="screen__body">
+
+      <div class="banket-section">
+        <h2 id="banket-title"></h2>
+        <p class="banket-intro" id="banket-intro"></p>
+        <ul class="banket-features" id="banket-features"></ul>
+
+        <div class="banket-cta">
+          <div class="banket-cta__title">Позвонить администратору</div>
+          <div class="banket-cta__sub" id="banket-cta-sub"></div>
+          <a class="btn btn--primary btn--block" id="banket-call" href="tel:">
+            📞 Обсудить торжество
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       9. КОНТАКТЫ
+       ═══════════════════════════════════════════════════════ -->
+  <section class="screen" id="screen-contacts" data-screen="contacts">
+    <div class="topbar">
+      <div class="topbar__spacer"></div>
+      <div class="topbar__title">Контакты</div>
+      <div class="topbar__spacer"></div>
+    </div>
+    <div class="screen__body">
+
+      <div class="contacts">
+        <div class="contact-card">
+          <button class="contact-row" id="contact-address">
+            <span class="contact-row__icon">📍</span>
+            <span>
+              <span class="contact-row__label">Адрес</span>
+              <span class="contact-row__value" id="contact-address-value"></span>
+            </span>
+          </button>
+          <div class="contact-row">
+            <span class="contact-row__icon">🕒</span>
+            <span>
+              <span class="contact-row__label">Часы работы</span>
+              <span class="contact-row__value" id="contact-hours-value"></span>
+            </span>
+          </div>
+          <a class="contact-row" id="contact-phone" href="tel:">
+            <span class="contact-row__icon">📞</span>
+            <span>
+              <span class="contact-row__label">Телефон</span>
+              <span class="contact-row__value" id="contact-phone-value"></span>
+            </span>
+          </a>
+          <div class="contact-row">
+            <span class="contact-row__icon">💬</span>
+            <span>
+              <span class="contact-row__label">Соцсети</span>
+              <span class="contact-socials">
+                <button id="social-vk">VK</button>
+                <button id="social-ig">IG</button>
+              </span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Статичная картинка карты — НЕ iframe (глючит в webview) -->
+        <div class="map-static" id="map-static">
+          <!--
+            Используем Яндекс.Карты Static API.
+            Координаты МОМО (Нахимова 2А): 44.617133, 33.522417
+            Если плохо грузится — заменить на свой PNG.
+          -->
+          <img
+            id="map-img"
+            alt="Карта: МОМО, проспект Нахимова, 2А"
+            src="https://static-maps.yandex.ru/1.x/?ll=33.522417,44.617133&z=16&l=map&size=600,300&pt=33.522417,44.617133,pm2rdm">
+        </div>
+
+        <a class="btn btn--secondary btn--block" id="contact-route" style="margin: 8px 16px; width: calc(100% - 32px);">
+          🧭 Построить маршрут
+        </a>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       BOTTOM SHEET — детали блюда
+       ═══════════════════════════════════════════════════════ -->
+  <div class="sheet-backdrop" id="sheet-backdrop"></div>
+  <div class="sheet" id="sheet-dish" role="dialog" aria-label="Карточка блюда">
+    <div class="sheet__handle"></div>
+    <div class="sheet__body">
+      <img class="sheet-dish__img" id="sheet-dish-img" alt="">
+      <div class="sheet-dish__body">
+        <h3 class="sheet-dish__name" id="sheet-dish-name"></h3>
+        <p class="sheet-dish__desc" id="sheet-dish-desc"></p>
+        <div class="sheet-dish__meta">
+          <span class="sheet-dish__grams" id="sheet-dish-grams"></span>
+          <span class="sheet-dish__price" id="sheet-dish-price"></span>
+        </div>
+        <div class="sheet-dish__allergens" id="sheet-dish-allergens"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       Полноэкранный просмотр фото галереи
+       ═══════════════════════════════════════════════════════ -->
+  <div class="sheet-photo" id="sheet-photo" role="dialog" aria-label="Фото">
+    <button class="sheet-photo__close" id="sheet-photo-close">✕</button>
+    <img id="sheet-photo-img" alt="">
+  </div>
+
+</div>
+
+
+<!--
+  Загружаем сначала data.js (он экспортит window.MOMO),
+  затем app.js (он использует window.MOMO).
+-->
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

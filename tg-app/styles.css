@@ -1,0 +1,998 @@
+/* ============================================================
+   styles.css — стили MOMO Telegram Mini App
+   ============================================================
+   Структура файла:
+     §1. CSS-переменные (тема Telegram + бренд MOMO)
+     §2. Reset и базовые элементы
+     §3. Layout приложения (контейнер, экраны, переходы)
+     §4. Шапка экрана (mini header внутри TMA)
+     §5. Hero, сегменты, общие карточки
+     §6. Меню (категории, блюда, аллергены)
+     §7. Бар (коктейли, согревающие)
+     §8. Детское меню (бирюзовая тема)
+     §9. Севастопольские сезоны
+     §10. Галерея
+     §11. Бронирование (главный CTA)
+     §12. Банкеты
+     §13. Контакты
+     §14. Bottom sheet (детали блюда, фото)
+     §15. Кнопки и обратная связь касания
+     §16. Тёмная тема
+     §17. Тонкие правки под маленькие экраны
+   ============================================================ */
+
+
+/* ============================================================
+   §1. CSS-переменные
+   Telegram передаёт цвета через themeParams — мы маппим их
+   на наши переменные в app.js (см. applyTelegramTheme).
+   Здесь же значения по умолчанию для светлой темы.
+   ============================================================ */
+:root {
+  /* Telegram theme (значения обновляются в JS) */
+  --tg-bg:          #ffffff;
+  --tg-secondary:   #f4f4f5;
+  --tg-text:        #1a1a1a;
+  --tg-hint:        #8e8e93;
+  --tg-link:        #2aabee;
+  --tg-button:      #2aabee;
+  --tg-button-text: #ffffff;
+  --tg-section-bg:  #ffffff;
+  --tg-section-separator: rgba(0, 0, 0, 0.06);
+
+  /* Бренд MOMO (фиксированные, не зависят от темы) */
+  --momo-coral:     #e07856;
+  --momo-coral-d:   #c66143;
+  --momo-teal:      #7fb8b0;
+  --momo-navy:      #1f3045;
+  --momo-pink:      #e8b6b0;
+  --momo-pink-soft: #f2cdc8;
+  --momo-oak:       #d4b896;
+  --momo-teal-kids: #5bb8b5;
+  --momo-velvet:    #5c3a4a;
+
+  /* Размеры */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-pill: 999px;
+
+  --tap-min: 44px;            /* минимальная высота кнопки по WCAG */
+  --page-pad: 16px;           /* боковые отступы экрана */
+  --header-h: 52px;           /* высота нашей шапки внутри TMA */
+  --bottom-safe: env(safe-area-inset-bottom, 0px);
+
+  /* Скорости */
+  --tr-fast: 150ms;
+  --tr-mid:  250ms;            /* переходы между экранами */
+  --tr-slow: 400ms;
+
+  /* Тени */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.16);
+}
+
+
+/* ============================================================
+   §2. Reset и базовые элементы
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent; /* убираем серую подсветку iOS */
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;             /* скролл живёт внутри .screen */
+  overscroll-behavior: none;     /* блок overscroll на iOS */
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 1.45;
+  color: var(--tg-text);
+  background: var(--tg-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+img { display: block; max-width: 100%; }
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+a { color: var(--tg-link); text-decoration: none; }
+
+
+/* ============================================================
+   §3. Layout — корневой контейнер и экраны
+   ============================================================ */
+.app {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  /* Telegram WebApp обычно подставляет --tg-viewport-height */
+  height: var(--tg-viewport-height, 100vh);
+  overflow: hidden;
+}
+
+/* Каждый экран — отдельный слой с прокруткой */
+.screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--tg-bg);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(20px);
+  transition: opacity var(--tr-mid) ease, transform var(--tr-mid) ease;
+}
+
+.screen.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0);
+}
+
+/* Экран, который уходит назад (вглубь стека) */
+.screen.leaving {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+.screen__body {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: calc(96px + var(--bottom-safe)); /* воздух под MainButton */
+}
+
+
+/* ============================================================
+   §4. Шапка экрана (не Telegram-шапка, наша внутренняя)
+   Используем только если нужен заголовок поверх контента.
+   Home обходится без неё, остальные экраны — со своей.
+   ============================================================ */
+.topbar {
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--page-pad);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--tg-text);
+  background: var(--tg-bg);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.topbar__title { flex: 1; text-align: center; }
+.topbar__spacer { width: 32px; } /* симметрия с BackButton, который рисует Telegram слева */
+
+
+/* ============================================================
+   §5. Hero, сегменты, общие карточки
+   ============================================================ */
+
+/* Компактный баннер вверху Home — фиксированная высота, не съедает экран.
+   Текст (название, рейтинг, часы) вынесен в отдельный блок .hero-info ниже. */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 280px;            /* выше — чтобы вид из окна на бухту читался */
+  overflow: hidden;
+  border-bottom-left-radius: var(--radius-xl);
+  border-bottom-right-radius: var(--radius-xl);
+}
+.hero__img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  /* 38% от верха = отрезаем потолок с лампами, показываем больше моря */
+  object-position: center 38%;
+}
+/* Лёгкий градиент снизу для эстетики — не для текста, текст ниже */
+.hero__overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.25) 100%);
+  pointer-events: none;
+}
+
+/* Блок-визитка с названием и социальными сигналами под баннером */
+.hero-info {
+  padding: 14px var(--page-pad) 4px;
+  text-align: center;
+}
+.hero-info__title {
+  font-family: 'Georgia', serif;
+  font-style: italic;
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--tg-text);
+  line-height: 1.1;
+}
+/* Логотип-картинка (используется вместо текстового заголовка) */
+.hero-info__logo {
+  display: block;
+  margin: 0 auto;
+  /* Ширина — почти на всю карточку, но не до краёв.
+     У логотипа много белого пространства вокруг wordmark — поэтому height ограничен,
+     иначе он будет «парить» в воздухе. */
+  width: 100%;
+  max-width: 280px;
+  height: auto;
+  /* Подрезаем вертикальные поля картинки — у файла большой воздух сверху/снизу */
+  margin-top: -10px;
+  margin-bottom: -16px;
+}
+.hero-info__sub {
+  font-size: 13px;
+  color: var(--tg-hint);
+  margin-top: 4px;
+}
+.hero-info__social {
+  font-size: 12px;
+  color: var(--tg-hint);
+  margin-top: 6px;
+  letter-spacing: 0.02em;
+}
+.hero-info__social .star { color: var(--momo-coral); font-weight: 600; }
+.hero-info__social .dot { opacity: 0.5; margin: 0 6px; }
+
+/* Микрокопия серым */
+.microcopy {
+  font-size: 12px;
+  color: var(--tg-hint);
+  text-align: center;
+  margin-top: 8px;
+}
+
+/* Группа сегментов «Сегодня я…» — 2×2 сетка */
+.segments {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 16px var(--page-pad) 8px;
+}
+.segment {
+  background: var(--tg-section-bg);
+  border-radius: var(--radius-lg);
+  padding: 14px 12px;
+  min-height: 96px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: left;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--tg-section-separator);
+  transition: transform var(--tr-fast) ease, background var(--tr-fast);
+}
+.segment__icon { font-size: 26px; line-height: 1; }
+.segment__title { font-size: 14px; font-weight: 600; color: var(--tg-text); margin-top: 8px; }
+.segment__sub { font-size: 12px; color: var(--tg-hint); margin-top: 2px; }
+
+/* Полоска «Банкеты» */
+.stripe {
+  margin: 8px var(--page-pad) 8px;
+  background: linear-gradient(135deg, var(--momo-pink-soft), var(--momo-pink));
+  color: var(--momo-navy);
+  border-radius: var(--radius-lg);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 500;
+  min-height: var(--tap-min);
+  text-align: left;
+  width: calc(100% - var(--page-pad) * 2);
+}
+.stripe strong { font-weight: 700; }
+.stripe__arrow { font-size: 18px; margin-left: 8px; opacity: 0.7; }
+
+/* Промо-баннер «Сезонное меню до 31 мая» */
+.promo {
+  margin: 12px var(--page-pad);
+  background: var(--tg-section-bg);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--tg-section-separator);
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  text-align: left;
+  width: calc(100% - var(--page-pad) * 2);
+}
+.promo__img { width: 96px; height: 96px; object-fit: cover; }
+.promo__body { padding: 12px 14px; display: flex; flex-direction: column; justify-content: center; }
+.promo__eyebrow { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--momo-coral); font-weight: 600; }
+.promo__title { font-size: 15px; font-weight: 600; color: var(--tg-text); margin-top: 4px; }
+.promo__sub { font-size: 12px; color: var(--tg-hint); margin-top: 2px; }
+
+/* Текстовая нижняя плашка-навигация на Home */
+.subnav {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  padding: 18px var(--page-pad) 12px;
+  font-size: 14px;
+}
+.subnav button { color: var(--tg-link); padding: 6px 4px; min-height: 32px; }
+
+
+/* ============================================================
+   §6. Меню — Кухня
+   ============================================================ */
+
+.section-title {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tg-hint);
+  margin: 16px var(--page-pad) 8px;
+  font-weight: 600;
+}
+
+.cat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px var(--page-pad);
+}
+.cat {
+  display: grid;
+  grid-template-columns: 64px 1fr 24px;
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  background: var(--tg-section-bg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--tg-section-separator);
+  min-height: var(--tap-min);
+  text-align: left;
+  width: 100%;
+}
+.cat__emoji {
+  width: 56px; height: 56px;
+  border-radius: var(--radius-md);
+  background: var(--tg-secondary);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px;
+}
+.cat__title { font-size: 16px; font-weight: 600; color: var(--tg-text); }
+.cat__sub { font-size: 13px; color: var(--tg-hint); margin-top: 2px; }
+.cat__chevron { color: var(--tg-hint); font-size: 18px; line-height: 1; }
+
+/* Карточка блюда */
+.dish-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px var(--page-pad);
+}
+.dish {
+  background: var(--tg-section-bg);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--tg-section-separator);
+  text-align: left;
+  width: 100%;
+}
+.dish__img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: var(--tg-secondary);
+}
+.dish__body { padding: 12px 14px; }
+.dish__name { font-size: 16px; font-weight: 600; color: var(--tg-text); }
+.dish__desc {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--tg-hint);
+  font-weight: 500;
+  margin-top: 4px;
+  line-height: 1.4;
+}
+.dish__foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--tg-section-separator);
+}
+.dish__meta { display: flex; align-items: baseline; gap: 8px; }
+.dish__grams { font-size: 12px; color: var(--tg-hint); }
+.dish__price { font-size: 16px; font-weight: 700; color: var(--momo-coral); }
+.dish__allergens { display: flex; gap: 4px; }
+.allergen-chip {
+  width: 22px; height: 22px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--tg-secondary);
+  border-radius: 50%;
+  font-size: 12px;
+}
+
+
+/* ============================================================
+   §7. Бар
+   ============================================================ */
+.bar-section { padding: 12px var(--page-pad); }
+.bar-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--tg-section-separator);
+  align-items: start;
+  text-align: left;
+}
+.bar-row:last-child { border-bottom: none; }
+.bar-row__name { font-size: 15px; font-weight: 600; color: var(--tg-text); }
+.bar-row__desc { font-size: 12px; color: var(--tg-hint); margin-top: 2px; line-height: 1.4; }
+.bar-row__price { font-size: 16px; font-weight: 700; color: var(--momo-coral); white-space: nowrap; }
+.bar-row__volume { font-size: 11px; color: var(--tg-hint); text-align: right; margin-top: 2px; }
+
+/* Тёмная плашка «Согревающие напитки» */
+.bar-velvet {
+  background: linear-gradient(135deg, var(--momo-velvet), #3f2532);
+  color: #fff;
+  border-radius: var(--radius-lg);
+  padding: 20px 16px;
+  margin: 12px var(--page-pad);
+}
+.bar-velvet h3 { color: #fff; font-size: 17px; font-weight: 600; margin-bottom: 12px; }
+.bar-velvet .bar-row { border-color: rgba(255,255,255,0.15); }
+.bar-velvet .bar-row__name { color: #fff; }
+.bar-velvet .bar-row__price { color: var(--momo-pink); }
+
+/* Блок «Вино» */
+.wine-block {
+  background: var(--tg-section-bg);
+  border-radius: var(--radius-lg);
+  padding: 20px 16px;
+  margin: 12px var(--page-pad);
+  text-align: center;
+  border: 1px solid var(--tg-section-separator);
+  box-shadow: var(--shadow-sm);
+}
+.wine-block__title { font-size: 17px; font-weight: 600; margin-bottom: 6px; }
+.wine-block__quote {
+  font-style: italic;
+  font-size: 14px;
+  color: var(--tg-hint);
+  margin: 8px 0 12px;
+}
+.wine-block__hint { font-size: 13px; color: var(--tg-text); }
+
+
+/* ============================================================
+   §8. Детское меню
+   ============================================================ */
+.kids-hero {
+  background: var(--momo-teal-kids);
+  color: #fff;
+  padding: 22px var(--page-pad) 20px;
+  text-align: center;
+}
+.kids-hero h2 {
+  font-family: 'Georgia', serif;
+  font-style: italic;
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+.kids-hero p { font-size: 14px; opacity: 0.95; }
+
+.kids-list { padding: 12px var(--page-pad); }
+.kids-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px dashed rgba(91, 184, 181, 0.4);
+  align-items: center;
+}
+.kids-row:last-child { border-bottom: none; }
+.kids-row__name { font-size: 15px; color: var(--tg-text); }
+.kids-row__grams { font-size: 12px; color: var(--tg-hint); }
+.kids-row__price { font-size: 16px; font-weight: 700; color: var(--momo-teal-kids); }
+
+.kids-benefits {
+  margin: 16px var(--page-pad);
+  padding: 16px;
+  background: var(--tg-section-bg);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--tg-section-separator);
+  box-shadow: var(--shadow-sm);
+}
+.kids-benefits h3 { font-size: 15px; margin-bottom: 12px; }
+.kids-benefits ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.kids-benefits li {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 14px; color: var(--tg-text);
+}
+.kids-benefits li .ic { font-size: 20px; }
+
+
+/* ============================================================
+   §9. Севастопольские сезоны
+   ============================================================ */
+.seasons-header {
+  padding: 20px var(--page-pad) 8px;
+}
+.seasons-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  padding: 6px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--momo-pink-soft);
+  color: var(--momo-navy);
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.seasons-title {
+  font-family: 'Georgia', serif;
+  font-style: italic;
+  font-size: 30px;
+  font-weight: 500;
+  color: var(--tg-text);
+  margin-bottom: 4px;
+  line-height: 1.05;
+}
+.seasons-season { font-size: 14px; color: var(--tg-hint); }
+.seasons-intro {
+  padding: 12px var(--page-pad) 8px;
+  font-size: 15px;
+  font-style: italic;
+  color: var(--tg-text);
+  line-height: 1.55;
+}
+
+.seasons-subhead {
+  font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--tg-hint); padding: 16px var(--page-pad) 8px; font-weight: 600;
+}
+
+.seasons-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 0 var(--page-pad);
+}
+.season-card {
+  background: var(--tg-section-bg);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--tg-section-separator);
+  display: flex; flex-direction: column;
+  text-align: left;
+}
+.season-card__img {
+  width: 100%; aspect-ratio: 1 / 1; object-fit: cover;
+  background: var(--tg-secondary);
+}
+.season-card__body { padding: 10px 12px; flex: 1; display: flex; flex-direction: column; gap: 4px; }
+.season-card__name { font-size: 14px; font-weight: 600; color: var(--tg-text); line-height: 1.25; }
+.season-card__desc { font-size: 11px; color: var(--tg-hint); line-height: 1.4; flex: 1; }
+.season-card__foot {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-top: 6px; padding-top: 6px;
+  border-top: 1px solid var(--tg-section-separator);
+}
+.season-card__grams { font-size: 11px; color: var(--tg-hint); }
+.season-card__price { font-size: 14px; font-weight: 700; color: var(--momo-coral); }
+
+.seasons-link {
+  display: inline-block;
+  margin: 12px var(--page-pad);
+  font-size: 13px;
+  color: var(--tg-link);
+}
+
+
+/* ============================================================
+   §10. Галерея
+   ============================================================ */
+.gallery-quote {
+  padding: 18px var(--page-pad);
+  font-family: 'Georgia', serif;
+  font-style: italic;
+  font-size: 17px;
+  text-align: center;
+  color: var(--tg-text);
+  line-height: 1.5;
+}
+.gallery-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding: 0 var(--page-pad) 16px;
+  grid-auto-rows: 170px;
+}
+.gallery-grid__item {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--tg-secondary);
+  position: relative;
+}
+.gallery-grid__item.big {
+  grid-column: span 2;
+  grid-row: span 2;
+  aspect-ratio: unset;
+}
+.gallery-grid__item img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform var(--tr-mid) ease;
+}
+
+
+/* ============================================================
+   §11. Бронирование — главный конверсионный экран
+   ============================================================ */
+.book-hero {
+  margin: 16px var(--page-pad);
+  background: linear-gradient(135deg, var(--momo-coral), var(--momo-coral-d));
+  color: #fff;
+  border-radius: var(--radius-xl);
+  padding: 28px 22px 24px;
+  text-align: center;
+  box-shadow: 0 12px 32px rgba(224, 120, 86, 0.35);
+}
+.book-hero__icon { font-size: 32px; margin-bottom: 8px; }
+.book-hero__title { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+.book-hero__sub { font-size: 14px; opacity: 0.95; margin-bottom: 20px; line-height: 1.5; }
+
+.book-share {
+  width: 100%;
+  background: #fff;
+  color: var(--momo-coral-d);
+  border-radius: var(--radius-pill);
+  padding: 16px 20px;
+  font-size: 16px;
+  font-weight: 700;
+  min-height: 56px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+  transition: transform var(--tr-fast) ease;
+}
+
+/* Альтернативные действия рядом */
+.book-alt {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 0 var(--page-pad);
+  margin-top: 12px;
+}
+.book-alt button,
+.book-alt a {
+  background: var(--tg-section-bg);
+  border: 1px solid var(--tg-section-separator);
+  border-radius: var(--radius-lg);
+  padding: 14px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  min-height: var(--tap-min);
+  color: var(--tg-text);
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  box-shadow: var(--shadow-sm);
+}
+
+.book-info {
+  padding: 18px var(--page-pad) 8px;
+  font-size: 13px;
+  color: var(--tg-hint);
+  text-align: center;
+  line-height: 1.6;
+}
+
+
+/* ============================================================
+   §12. Банкеты
+   ============================================================ */
+.banket-section { padding: 4px var(--page-pad) 16px; }
+.banket-section h2 {
+  font-family: 'Georgia', serif;
+  font-style: italic;
+  font-size: 24px;
+  color: var(--tg-text);
+  margin: 12px 0 8px;
+  line-height: 1.2;
+}
+.banket-intro {
+  font-size: 15px;
+  color: var(--tg-text);
+  line-height: 1.55;
+  margin-bottom: 18px;
+}
+.banket-features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+.banket-features li {
+  display: flex;
+  gap: 12px;
+  font-size: 14px;
+  align-items: flex-start;
+  line-height: 1.45;
+}
+.banket-features li .ic { font-size: 18px; line-height: 1.4; }
+
+.banket-cta {
+  background: var(--momo-pink-soft);
+  border-radius: var(--radius-xl);
+  padding: 20px 18px;
+  text-align: center;
+}
+.banket-cta__title { font-size: 17px; font-weight: 600; color: var(--momo-navy); margin-bottom: 6px; }
+.banket-cta__sub { font-size: 13px; color: var(--momo-navy); opacity: 0.85; margin-bottom: 16px; }
+
+
+/* ============================================================
+   §13. Контакты
+   ============================================================ */
+.contacts { padding: 8px var(--page-pad); }
+.contact-card {
+  background: var(--tg-section-bg);
+  border: 1px solid var(--tg-section-separator);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 10px;
+}
+.contact-row {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 16px;
+  min-height: var(--tap-min);
+  text-align: left;
+  width: 100%;
+}
+.contact-row + .contact-row { border-top: 1px solid var(--tg-section-separator); }
+.contact-row__icon {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--momo-coral);
+  color: #fff;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.contact-row__label { font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--tg-hint); }
+.contact-row__value { font-size: 15px; font-weight: 500; color: var(--tg-text); margin-top: 2px; }
+
+.contact-socials { display: flex; gap: 10px; margin-top: 6px; }
+.contact-socials button {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--tg-secondary);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 16px;
+}
+
+/* Статичная карта */
+.map-static {
+  width: calc(100% - var(--page-pad) * 2);
+  margin: 16px var(--page-pad) 8px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--tg-section-separator);
+  background: var(--tg-secondary);
+  aspect-ratio: 16 / 9;
+}
+.map-static img { width: 100%; height: 100%; object-fit: cover; }
+
+
+/* ============================================================
+   §14. Bottom sheet (карточка блюда и фото)
+   ============================================================ */
+.sheet-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--tr-mid);
+  z-index: 30;
+}
+.sheet-backdrop.open { opacity: 1; pointer-events: auto; }
+
+.sheet {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  max-height: 90vh;
+  background: var(--tg-bg);
+  border-top-left-radius: var(--radius-xl);
+  border-top-right-radius: var(--radius-xl);
+  z-index: 31;
+  transform: translateY(100%);
+  transition: transform var(--tr-mid) cubic-bezier(0.2, 0.7, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  padding-bottom: var(--bottom-safe);
+  box-shadow: var(--shadow-lg);
+}
+.sheet.open { transform: translateY(0); }
+
+.sheet__handle {
+  width: 40px; height: 4px;
+  background: rgba(0,0,0,0.15);
+  border-radius: 2px;
+  margin: 8px auto;
+  flex-shrink: 0;
+}
+
+.sheet__body {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 24px;
+}
+
+/* Карточка блюда внутри sheet */
+.sheet-dish__img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: var(--tg-secondary);
+}
+.sheet-dish__body { padding: 16px var(--page-pad); }
+.sheet-dish__name { font-size: 22px; font-weight: 700; color: var(--tg-text); margin-bottom: 8px; }
+.sheet-dish__desc { font-size: 15px; color: var(--tg-text); line-height: 1.5; margin-bottom: 16px; }
+.sheet-dish__meta {
+  display: flex; justify-content: space-between;
+  padding: 14px 0; border-top: 1px solid var(--tg-section-separator);
+  border-bottom: 1px solid var(--tg-section-separator);
+  margin-bottom: 14px;
+}
+.sheet-dish__price { font-size: 22px; font-weight: 700; color: var(--momo-coral); }
+.sheet-dish__grams { font-size: 13px; color: var(--tg-hint); align-self: center; }
+
+.sheet-dish__allergens {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.sheet-dish__allergens .a-row {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 14px; color: var(--tg-text);
+}
+.sheet-dish__allergens .a-row .ic { font-size: 18px; }
+
+/* Полноэкранное фото */
+.sheet-photo {
+  position: fixed; inset: 0;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 40;
+  display: none;
+  align-items: center; justify-content: center;
+  padding: 20px;
+}
+.sheet-photo.open { display: flex; }
+.sheet-photo img { max-width: 100%; max-height: 100%; border-radius: var(--radius-md); }
+.sheet-photo__close {
+  position: absolute; top: 20px; right: 20px;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 22px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+
+/* ============================================================
+   §15. Кнопки, обратная связь касания
+   ============================================================ */
+
+/* Универсальная кнопка-call to action */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: var(--radius-pill);
+  padding: 14px 22px;
+  min-height: var(--tap-min);
+  transition: transform var(--tr-fast) ease, opacity var(--tr-fast);
+}
+.btn--primary {
+  background: var(--momo-coral);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(224, 120, 86, 0.35);
+}
+.btn--secondary {
+  background: var(--tg-section-bg);
+  color: var(--tg-text);
+  border: 1px solid var(--tg-section-separator);
+  box-shadow: var(--shadow-sm);
+}
+.btn--ghost {
+  color: var(--tg-link);
+  padding: 10px 14px;
+}
+.btn--block { width: 100%; }
+
+/* Универсальная обратная связь на касание для кликабельных элементов */
+button, .clickable, a {
+  transition: transform var(--tr-fast) ease, opacity var(--tr-fast), background-color var(--tr-fast);
+}
+button:active, .clickable:active, a:active {
+  transform: scale(0.97);
+}
+.segment:active,
+.cat:active,
+.dish:active,
+.season-card:active,
+.gallery-grid__item:active,
+.stripe:active,
+.promo:active,
+.contact-row:active {
+  background-color: var(--tg-secondary);
+  transform: scale(0.98);
+}
+
+
+/* ============================================================
+   §16. Тёмная тема
+   Включается, когда Telegram отдаёт colorScheme = 'dark'.
+   В app.js добавляется class="theme-dark" на <html>.
+   ============================================================ */
+.theme-dark {
+  --tg-bg:          #17212b;
+  --tg-secondary:   #1e2c3a;
+  --tg-text:        #f5f5f7;
+  --tg-hint:        #708499;
+  --tg-link:        #6ab3f3;
+  --tg-button:      #5288c1;
+  --tg-button-text: #ffffff;
+  --tg-section-bg:  #1e2c3a;
+  --tg-section-separator: rgba(255, 255, 255, 0.08);
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.6);
+}
+
+.theme-dark .hero__overlay {
+  background: linear-gradient(180deg, rgba(0,0,0,0) 30%, rgba(0,0,0,0.8) 100%);
+}
+
+
+/* ============================================================
+   §17. Тонкие правки под маленькие экраны (320px)
+   ============================================================ */
+@media (max-width: 360px) {
+  :root { --page-pad: 12px; }
+  .hero__title { font-size: 32px; }
+  .seasons-title { font-size: 26px; }
+  .segments { gap: 8px; }
+  .segment { min-height: 88px; padding: 12px 10px; }
+  .segment__title { font-size: 13px; }
+  .seasons-grid { gap: 8px; }
+}
+
+/* Скрываем горизонтальный скролл совсем — на всякий случай */
+.screen__body::-webkit-scrollbar { display: none; }
+.screen__body { scrollbar-width: none; }
