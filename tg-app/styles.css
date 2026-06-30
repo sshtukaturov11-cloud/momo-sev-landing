@@ -179,7 +179,31 @@ a { color: var(--tg-link); text-decoration: none; }
 }
 
 .topbar__title { flex: 1; text-align: center; }
-.topbar__spacer { width: 32px; } /* симметрия с BackButton, который рисует Telegram слева */
+.topbar__spacer { width: 56px; } /* симметрия для центра заголовка (под ширину кнопки «Назад») */
+
+/* Кнопка «Назад» в нашей шапке — видна на всех экранах кроме Home.
+   Дублирует BackButton Telegram, чтобы пользователь точно мог вернуться,
+   даже если нативная кнопка скрыта/не отображается на его клиенте. */
+.topbar__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  height: 36px;
+  padding: 0 10px 0 6px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--tg-link);              /* акцентный цвет Telegram (синий) */
+  background: transparent;
+  border-radius: var(--radius-md);
+  white-space: nowrap;
+  min-width: 44px;
+  min-height: 36px;
+  transition: background var(--tr-fast);
+}
+.topbar__back:active {
+  background: var(--tg-secondary);
+  transform: scale(0.96);
+}
 
 
 /* ============================================================

@@ -157,6 +157,16 @@
     back();
   }
 
+  // Делегированный клик по нашим in-app кнопкам [data-back] в шапке экрана.
+  // Дублирует BackButton Telegram — на случай, если у пользователя его не видно.
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-back]');
+    if (!btn) return;
+    e.preventDefault();
+    hapticTap();
+    back();
+  });
+
   // ============================================================
   // §3. MAIN BUTTON (нативная кнопка Telegram внизу)
   // ============================================================
