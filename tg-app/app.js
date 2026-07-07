@@ -289,9 +289,9 @@
     // Логотип — нужный вариант по теме (на старте может быть до initTelegram)
     updateLogoForTheme();
 
-    // Подзаголовок под логотипом — короткий адрес + часы
-    document.getElementById('hero-subtitle').textContent =
-      M.RESTAURANT.addressShort + ' · ' + M.RESTAURANT.hoursShort.split(',')[0];
+    // Подзаголовок под логотипом — только адрес.
+    // Часы вынесены на экраны «Бронирование» и «Контакты», где для них есть место.
+    document.getElementById('hero-subtitle').textContent = M.RESTAURANT.addressShort;
 
     document.getElementById('hero-social').innerHTML =
       '<span class="star">★ ' + M.RESTAURANT.rating + '</span>' +
@@ -574,7 +574,10 @@
       else window.open(M.RESTAURANT.ADMIN_BANQUET, '_blank');
     });
 
-    document.getElementById('book-hours').textContent = M.RESTAURANT.hours + ' без выходных';
+    // Расписание работы для экрана Бронирования — многострочный HTML
+    document.getElementById('book-hours').innerHTML = M.RESTAURANT.schedule
+      .map(row => `<div>${escapeHtml(row.days)} — <strong>${escapeHtml(row.text)}</strong></div>`)
+      .join('');
   }
 
   // ============================================================
@@ -602,8 +605,10 @@
   // ============================================================
   function renderContacts() {
     document.getElementById('contact-address-value').textContent = M.RESTAURANT.address;
-    document.getElementById('contact-hours-value').textContent =
-      M.RESTAURANT.hours + ' · без выходных';
+    // Расписание работы в карточке Контактов — многострочный HTML
+    document.getElementById('contact-hours-value').innerHTML = M.RESTAURANT.schedule
+      .map(row => `<div>${escapeHtml(row.days)}<br><strong>${escapeHtml(row.text)}</strong></div>`)
+      .join('<div style="height:6px"></div>');
 
     const phone = document.getElementById('contact-phone');
     phone.href = 'tel:' + M.RESTAURANT.phone;

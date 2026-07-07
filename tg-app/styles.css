@@ -726,10 +726,30 @@ a { color: var(--tg-link); text-decoration: none; }
 
 .book-info {
   padding: 18px var(--page-pad) 8px;
-  font-size: 13px;
-  color: var(--tg-hint);
   text-align: center;
-  line-height: 1.6;
+}
+.book-info__label {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tg-hint);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+.book-info__schedule {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+  color: var(--tg-text);
+  line-height: 1.45;
+  margin-bottom: 12px;
+}
+.book-info__schedule strong { font-weight: 700; color: var(--tg-text); }
+.book-info__hint {
+  font-size: 12px;
+  color: var(--tg-hint);
+  line-height: 1.5;
 }
 
 

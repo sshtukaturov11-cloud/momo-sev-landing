@@ -39,7 +39,7 @@
       <!-- Текстовая «визитка» под баннером: логотип, адрес/часы, рейтинг -->
       <div class="hero-info">
         <img class="hero-info__logo" id="hero-logo" alt="МОМО — семейный ресторан с видом на море">
-        <p class="hero-info__sub" id="hero-subtitle">Севастополь · Нахимова 2А · 10:00–23:00</p>
+        <p class="hero-info__sub" id="hero-subtitle">Севастополь · Нахимова 2А</p>
         <p class="hero-info__social" id="hero-social"></p>
       </div>
 
@@ -245,11 +245,12 @@
         <button id="book-chat" type="button">💬 Чат с админом</button>
       </div>
 
-      <!-- Доп. инфа -->
-      <p class="book-info">
-        Время работы: <span id="book-hours"></span><br>
-        Стол держим 20 минут после забронированного времени
-      </p>
+      <!-- Доп. инфа: расписание работы + правило о столе -->
+      <div class="book-info">
+        <div class="book-info__label">Время работы</div>
+        <div class="book-info__schedule" id="book-hours"></div>
+        <div class="book-info__hint">Стол держим 20 минут после забронированного времени</div>
+      </div>
 
     </div>
   </section>
