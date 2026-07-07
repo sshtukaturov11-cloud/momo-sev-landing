@@ -51,6 +51,78 @@
     tg.onEvent('mainButtonClicked', onMainButtonClicked);
   }
 
+  // ============================================================
+  // Хелперы для «Открыто / Закрыто до …» на Home
+  // ============================================================
+
+  // Текущее время в часовом поясе ресторана (Севастополь = МСК, UTC+3)
+  // Независимо от того, где находится пользователь.
+  function getRestaurantNow() {
+    const now = new Date();
+    const utcMs = now.getTime() + (now.getTimezoneOffset() * 60000);
+    const offsetMs = M.RESTAURANT.timezoneOffsetHours * 60 * 60 * 1000;
+    return new Date(utcMs + offsetMs);
+  }
+
+  // Форматируем час как «14:00» / «21:30»
+  function formatHour(h) {
+    const hh = Math.floor(h);
+    const mm = Math.round((h - hh) * 60);
+    return String(hh).padStart(2, '0') + ':' + String(mm).padStart(2, '0');
+  }
+
+  // Название дня недели в родительно-звучащей форме («среда», «завтра»)
+  function dayName(dayIdx, offset) {
+    if (offset === 1) return 'завтра';
+    const names = ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'];
+    return names[dayIdx];
+  }
+
+  // Определяет: открыто ли сейчас, до какого времени / когда откроется.
+  // Возвращает { isOpen: bool, text: string }.
+  function getOpenStatus() {
+    const now = getRestaurantNow();
+    const day = now.getDay();                            // 0..6
+    const timeNow = now.getHours() + now.getMinutes() / 60;
+    const today = M.RESTAURANT.scheduleByDay[day];
+
+    // 1. Открыто сейчас
+    if (today && timeNow >= today.open && timeNow < today.close) {
+      return { isOpen: true, text: 'Открыто до ' + formatHour(today.close) };
+    }
+
+    // 2. Закрыто, но сегодня ещё откроется (до открытия)
+    if (today && timeNow < today.open) {
+      return { isOpen: false, text: 'Закрыто до ' + formatHour(today.open) };
+    }
+
+    // 3. Закрыто — ищем следующий рабочий день
+    for (let offset = 1; offset <= 7; offset++) {
+      const nextIdx = (day + offset) % 7;
+      const sched = M.RESTAURANT.scheduleByDay[nextIdx];
+      if (sched) {
+        return {
+          isOpen: false,
+          text: 'Закрыто до ' + formatHour(sched.open) + ' · ' + dayName(nextIdx, offset)
+        };
+      }
+    }
+
+    // На случай если вообще всё закрыто (сюда попасть можно только при ошибке в данных)
+    return { isOpen: false, text: 'Закрыто' };
+  }
+
+  // Обновляет плашку статуса в Hero. Вызывается на старте
+  // и раз в минуту (чтобы не «протухла» если TMA держат открытым долго).
+  function updateOpenStatusPill() {
+    const el = document.getElementById('open-status');
+    if (!el) return;
+    const status = getOpenStatus();
+    el.textContent = status.text;
+    el.classList.toggle('open', status.isOpen);
+    el.classList.toggle('closed', !status.isOpen);
+  }
+
   // Подставляет нужный вариант логотипа в зависимости от темы Telegram
   function updateLogoForTheme() {
     const logoEl = document.getElementById('hero-logo');
@@ -292,6 +364,12 @@
     // Подзаголовок под логотипом — только адрес.
     // Часы вынесены на экраны «Бронирование» и «Контакты», где для них есть место.
     document.getElementById('hero-subtitle').textContent = M.RESTAURANT.addressShort;
+
+    // Плашка «Открыто до 21:00» / «Закрыто до 14:00 · среда»
+    updateOpenStatusPill();
+    // Обновляем раз в минуту — на случай если пользователь держит TMA открытым
+    // и наступил час открытия/закрытия
+    setInterval(updateOpenStatusPill, 60 * 1000);
 
     document.getElementById('hero-social').innerHTML =
       '<span class="star">★ ' + M.RESTAURANT.rating + '</span>' +
