@@ -382,12 +382,12 @@
     M.SEGMENTS.forEach(seg => {
       const btn = document.createElement('button');
       btn.className = 'segment clickable';
+      // Подпись (subtitle) рендерим только если явно задана — иначе плитка без неё
+      const subHtml = seg.subtitle ? `<div class="segment__sub">${escapeHtml(seg.subtitle)}</div>` : '';
       btn.innerHTML = `
         <div class="segment__icon">${seg.icon}</div>
-        <div>
-          <div class="segment__title">${seg.title}</div>
-          <div class="segment__sub">${seg.subtitle}</div>
-        </div>
+        <div class="segment__title">${escapeHtml(seg.title)}</div>
+        ${subHtml}
       `;
       btn.addEventListener('click', () => {
         hapticTap();

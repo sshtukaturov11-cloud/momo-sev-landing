@@ -75,11 +75,12 @@
   };
 
   // ---------- Сегменты «Сегодня я…» на Home ----------
+  // Плитки на Home — только иконка и название, без подписей.
   const SEGMENTS = [
-    { icon: '☕', title: 'Встречаюсь с подругами', subtitle: 'Светлый зал, тихий джаз', target: 'kitchen' },
-    { icon: '🍷', title: 'На свидание',           subtitle: 'Стол у окна, мягкий свет', target: 'bar' },
-    { icon: '🧒', title: 'С детьми, с семьёй',    subtitle: 'Детская комната, мультики', target: 'kids' },
-    { icon: '🌿', title: 'На сезонный сет',       subtitle: '4 блюда + 4 коктейля', target: 'seasons' }
+    { icon: '🍽',  title: 'Меню кухни',  target: 'kitchen' },
+    { icon: '🍸', title: 'Меню бара',   target: 'bar' },
+    { icon: '🧒', title: 'Детское меню', target: 'kids' },
+    { icon: '🌿', title: 'Меню сезона',  target: 'seasons' }
   ];
 
   // ---------- Меню — Кухня ----------
