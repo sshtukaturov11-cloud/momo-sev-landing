@@ -246,6 +246,22 @@ a { color: var(--tg-link); text-decoration: none; }
   color: var(--tg-text);
   line-height: 1.1;
 }
+/* Персональное приветствие «Здравствуйте, Имя 👋» — над логотипом.
+   Если имя не пришло из Telegram, элемент пустой и скрывается. */
+.hero-info__greeting {
+  font-size: 14px;
+  color: var(--tg-hint);
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+.hero-info__greeting:empty {
+  display: none;
+}
+.hero-info__greeting strong {
+  color: var(--tg-text);
+  font-weight: 600;
+}
+
 /* Логотип-картинка (используется вместо текстового заголовка) */
 .hero-info__logo {
   display: block;

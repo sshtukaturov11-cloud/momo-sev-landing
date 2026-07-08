@@ -123,6 +123,22 @@
     el.classList.toggle('closed', !status.isOpen);
   }
 
+  // Подставляет персональное приветствие «Здравствуйте, Имя 👋» на Home.
+  // Имя берётся из Telegram initData бесплатно — согласия не нужно.
+  // Если TMA открыт вне Telegram (или имя не пришло) — плашка скрывается.
+  function updateGreeting() {
+    const el = document.getElementById('hero-greeting');
+    if (!el) return;
+    const user = tg && tg.initDataUnsafe && tg.initDataUnsafe.user;
+    const firstName = user && user.first_name;
+    if (firstName) {
+      // escapeHtml нужен на случай если у гостя странное имя типа "<script>"
+      el.innerHTML = 'Здравствуйте, <strong>' + escapeHtml(firstName) + '</strong> 👋';
+    } else {
+      el.textContent = '';  // :empty правило скроет весь элемент
+    }
+  }
+
   // Подставляет нужный вариант логотипа в зависимости от темы Telegram
   function updateLogoForTheme() {
     const logoEl = document.getElementById('hero-logo');
@@ -360,6 +376,9 @@
 
     // Логотип — нужный вариант по теме (на старте может быть до initTelegram)
     updateLogoForTheme();
+
+    // Персональное приветствие — «Здравствуйте, Имя 👋» над логотипом
+    updateGreeting();
 
     // Подзаголовок под логотипом — только адрес.
     // Часы вынесены на экраны «Бронирование» и «Контакты», где для них есть место.
