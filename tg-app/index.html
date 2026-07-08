@@ -48,12 +48,6 @@
       <!-- Сегменты «Сегодня я…» — 4 плитки в сетке 2×2 -->
       <div class="segments" id="segments"></div>
 
-      <!-- Полоска «Банкеты» — отдельный CTA -->
-      <button class="stripe" id="stripe-banket">
-        <span>🎉 <strong>Банкеты и торжества</strong> — скажите при звонке</span>
-        <span class="stripe__arrow">›</span>
-      </button>
-
       <!-- Промо-баннер «Севастопольские сезоны» -->
       <button class="promo" id="promo-seasons">
         <img class="promo__img" id="promo-img" alt="">
@@ -264,7 +258,7 @@
   <section class="screen" id="screen-banket" data-screen="banket">
     <div class="topbar">
       <button class="topbar__back" data-back aria-label="Назад">‹ Назад</button>
-      <div class="topbar__title">Банкеты</div>
+      <div class="topbar__title">Семейные торжества</div>
       <div class="topbar__spacer"></div>
     </div>
     <div class="screen__body">
@@ -273,6 +267,12 @@
         <h2 id="banket-title"></h2>
         <p class="banket-intro" id="banket-intro"></p>
         <ul class="banket-features" id="banket-features"></ul>
+
+        <!-- Кнопка «Банкетное меню» — содержимое пришлёт заказчик позже.
+             Пока заглушка со всплывающим сообщением. -->
+        <button class="btn btn--secondary btn--block" id="banket-menu-btn" style="margin-bottom: 14px;">
+          📋 Банкетное меню
+        </button>
 
         <div class="banket-cta">
           <div class="banket-cta__title">Позвонить администратору</div>

@@ -396,12 +396,6 @@
       wrap.appendChild(btn);
     });
 
-    // Полоска «Банкеты»
-    document.getElementById('stripe-banket').addEventListener('click', () => {
-      hapticTap();
-      go('banket');
-    });
-
     // Промо «Сезонное меню»
     document.getElementById('promo-img').src = M.SEASONS.dishes[0].photo;
     document.getElementById('promo-eyebrow').textContent = M.SEASONS.season;
@@ -676,6 +670,23 @@
 
     document.getElementById('banket-call').href = 'tel:' + M.RESTAURANT.phone;
     document.getElementById('banket-call').addEventListener('click', hapticTap);
+
+    // Кнопка «Банкетное меню» — заглушка. Контент от заказчика придёт позже,
+    // пока просто показываем всплывающее сообщение.
+    document.getElementById('banket-menu-btn').addEventListener('click', () => {
+      hapticTap();
+      if (tg && tg.showPopup) {
+        tg.showPopup({
+          title: 'Банкетное меню',
+          message: 'Мы готовим меню под каждое торжество индивидуально. Расскажите формат события — подберём предложение за день.',
+          buttons: [{ id: 'ok', type: 'default', text: 'Понятно' }]
+        });
+      } else if (tg && tg.showAlert) {
+        tg.showAlert('Банкетное меню готовим индивидуально под каждое торжество. Обсудим по звонку.');
+      } else {
+        alert('Банкетное меню готовим индивидуально под каждое торжество. Обсудим по звонку.');
+      }
+    });
   }
 
   // ============================================================
