@@ -475,11 +475,30 @@ a { color: var(--tg-link); text-decoration: none; }
   text-align: left;
   width: 100%;
 }
+.dish {
+  position: relative;   /* нужно для абсолютной плашки .dish__popular */
+}
 .dish__img {
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
   background: var(--tg-secondary);
+}
+
+/* Плашка «Гости заказывают чаще всего» — левый верхний угол над фото */
+.dish__popular {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  background: var(--momo-coral);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 2px 8px rgba(224, 120, 86, 0.4);
+  letter-spacing: 0.01em;
 }
 .dish__body { padding: 12px 14px; }
 .dish__name { font-size: 16px; font-weight: 600; color: var(--tg-text); }
@@ -732,6 +751,71 @@ a { color: var(--tg-link); text-decoration: none; }
 /* ============================================================
    §11. Бронирование — главный конверсионный экран
    ============================================================ */
+/* ────────────────────────────────────────
+   Форма брони (опциональные поля)
+   ──────────────────────────────────────── */
+.book-form {
+  padding: 12px var(--page-pad) 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.book-form__group { display: flex; flex-direction: column; gap: 6px; }
+.book-form__label {
+  font-size: 12px;
+  color: var(--tg-hint);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding-left: 2px;
+}
+.book-form__row { display: flex; gap: 8px; }
+.book-form__row .book-form__input { flex: 1; min-width: 0; }
+.book-form__input {
+  width: 100%;
+  padding: 12px 14px;
+  border: none;
+  background: var(--tg-section-bg);
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  color: var(--tg-text);
+  font-family: inherit;
+  min-height: var(--tap-min);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--tg-section-separator);
+  -webkit-appearance: none;         /* убирает iOS-стрелки для date/time */
+}
+.book-form__input:focus {
+  outline: none;
+  border-color: var(--momo-coral);
+}
+.book-form__input::placeholder { color: var(--tg-hint); }
+
+/* Чипсы «Сколько человек?» */
+.book-guests {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.book-guests button {
+  min-width: 48px;
+  min-height: 44px;
+  padding: 10px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--tg-section-bg);
+  border: 1px solid var(--tg-section-separator);
+  color: var(--tg-text);
+  font-size: 15px;
+  font-weight: 600;
+  transition: transform var(--tr-fast), background var(--tr-fast), color var(--tr-fast);
+  box-shadow: var(--shadow-sm);
+}
+.book-guests button.active {
+  background: var(--momo-coral);
+  color: #fff;
+  border-color: var(--momo-coral);
+  box-shadow: 0 4px 12px rgba(224, 120, 86, 0.35);
+}
+
 .book-hero {
   margin: 16px var(--page-pad);
   background: linear-gradient(135deg, var(--momo-coral), var(--momo-coral-d));
@@ -962,6 +1046,19 @@ a { color: var(--tg-link); text-decoration: none; }
   background: var(--tg-secondary);
 }
 .sheet-dish__body { padding: 16px var(--page-pad); }
+
+/* Плашка «Гости заказывают чаще всего» — в верхней части bottom sheet */
+.sheet-dish__popular {
+  display: inline-block;
+  background: var(--momo-coral);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(224, 120, 86, 0.35);
+}
 .sheet-dish__name { font-size: 22px; font-weight: 700; color: var(--tg-text); margin-bottom: 8px; }
 .sheet-dish__desc { font-size: 15px; color: var(--tg-text); line-height: 1.5; margin-bottom: 16px; }
 .sheet-dish__meta {

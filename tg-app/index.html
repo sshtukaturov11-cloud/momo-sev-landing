@@ -225,10 +225,34 @@
     </div>
     <div class="screen__body">
 
+      <!-- Опциональная форма: детали брони. Все поля можно не заполнять —
+           тогда админ уточнит по телефону. Если заполнены — админ увидит контекст. -->
+      <div class="book-form">
+        <div class="book-form__group">
+          <label class="book-form__label" for="book-date">Когда?</label>
+          <div class="book-form__row">
+            <input type="date" id="book-date" class="book-form__input" placeholder="Дата">
+            <input type="time" id="book-time" class="book-form__input" placeholder="Время">
+          </div>
+        </div>
+
+        <div class="book-form__group">
+          <label class="book-form__label">Сколько человек?</label>
+          <div class="book-guests" id="book-guests"></div>
+        </div>
+
+        <div class="book-form__group">
+          <label class="book-form__label" for="book-occasion">Особый повод?</label>
+          <input type="text" id="book-occasion" class="book-form__input"
+                 placeholder="день рождения, годовщина, семейный ужин…"
+                 maxlength="80">
+        </div>
+      </div>
+
       <!-- Главная плашка: один тап → requestContact -->
       <div class="book-hero">
         <div class="book-hero__icon">📞</div>
-        <div class="book-hero__title">Бронь за 1 тап</div>
+        <div class="book-hero__title">Оставить заявку</div>
         <p class="book-hero__sub">
           Поделитесь номером — администратор перезвонит<br>в течение 15 минут
         </p>
@@ -367,6 +391,10 @@
     <div class="sheet__body">
       <img class="sheet-dish__img" id="sheet-dish-img" alt="">
       <div class="sheet-dish__body">
+        <!-- Плашка «популярное» показывается только когда dish.popular === true -->
+        <div class="sheet-dish__popular" id="sheet-dish-popular" style="display: none;">
+          ⭐️ Гости заказывают чаще всего
+        </div>
         <h3 class="sheet-dish__name" id="sheet-dish-name"></h3>
         <p class="sheet-dish__desc" id="sheet-dish-desc"></p>
         <div class="sheet-dish__meta">

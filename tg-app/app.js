@@ -309,6 +309,58 @@
   // ============================================================
   // §4. БРОНИРОВАНИЕ через requestContact
   // ============================================================
+  // ============================================================
+  // Собирает сводку из заполненных полей формы брони
+  // ============================================================
+  function getBookingSummary() {
+    const parts = [];
+
+    // Дата
+    const dateVal = (document.getElementById('book-date') || {}).value;
+    if (dateVal) parts.push('📅 ' + formatBookingDate(dateVal));
+
+    // Время
+    const timeVal = (document.getElementById('book-time') || {}).value;
+    if (timeVal) parts.push('🕒 ' + timeVal);
+
+    // Гости — выбранная плашка
+    const guestsBtn = document.querySelector('.book-guests button.active');
+    if (guestsBtn) {
+      const g = guestsBtn.dataset.guests;
+      parts.push('👥 ' + g + ' ' + guestsPluralForm(g));
+    }
+
+    // Особый повод
+    const occasionEl = document.getElementById('book-occasion');
+    const occasion = occasionEl && occasionEl.value.trim();
+    if (occasion) parts.push('🎉 ' + occasion);
+
+    return parts.join('\n');
+  }
+
+  // Форматирует ISO-дату «2026-07-15» → «Пт, 15 июля»
+  function formatBookingDate(iso) {
+    const d = new Date(iso + 'T00:00:00');
+    if (isNaN(d.getTime())) return iso;
+    const days = ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'];
+    const months = ['января','февраля','марта','апреля','мая','июня',
+                    'июля','августа','сентября','октября','ноября','декабря'];
+    return days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()];
+  }
+
+  // «2 человека» / «5 человек» / «1 гость»
+  function guestsPluralForm(g) {
+    // '6+' → просто «человек»
+    if (String(g).endsWith('+')) return 'человек';
+    const n = parseInt(g, 10);
+    const last = n % 10;
+    const lastTwo = n % 100;
+    if (lastTwo >= 11 && lastTwo <= 14) return 'человек';
+    if (last === 1) return 'человек';
+    if (last >= 2 && last <= 4) return 'человека';
+    return 'человек';
+  }
+
   function requestContactAndBook() {
     if (!tg || !tg.requestContact) {
       // Не в Telegram — просто звоним
@@ -321,14 +373,20 @@
         // Тактильная похвала
         if (haptic) haptic.notificationOccurred('success');
 
-        // В реальной интеграции: бот получает событие, перезванивает.
-        // Здесь показываем подтверждение и закрываем Mini App,
-        // чтобы пользователь вернулся в чат бота и увидел сообщение.
+        // Собираем сводку из формы — если что-то заполнено, покажем гостю,
+        // что мы это записали. Полезно и без бэкенда: гость видит, что запомним
+        // при звонке, о чём говорить.
+        const summary = getBookingSummary();
+        const baseMessage = 'Администратор перезвонит в течение 15 минут.';
+        const message = summary
+          ? baseMessage + '\n\nМы записали:\n' + summary
+          : baseMessage;
+
         if (tg.showPopup) {
           tg.showPopup(
             {
               title: 'Спасибо!',
-              message: 'Администратор перезвонит в течение 15 минут.',
+              message: message,
               buttons: [{ id: 'ok', type: 'ok', text: 'Хорошо' }]
             },
             () => {
@@ -478,8 +536,13 @@
     (M.DISHES[catId] || []).forEach(dish => {
       const card = document.createElement('button');
       card.className = 'dish clickable';
+      // Плашка «Гости заказывают чаще всего» на карточке — если помечено popular: true в data.js
+      const popularBadge = dish.popular
+        ? '<div class="dish__popular">⭐️ Гости заказывают чаще всего</div>'
+        : '';
       card.innerHTML = `
         <img class="dish__img" src="${dish.photo}" alt="${escapeHtml(dish.name)}" loading="lazy">
+        ${popularBadge}
         <div class="dish__body">
           <div class="dish__name">${escapeHtml(dish.name)}</div>
           <div class="dish__desc">${escapeHtml(dish.desc)}</div>
@@ -665,6 +728,42 @@
       else window.open(M.RESTAURANT.ADMIN_BANQUET, '_blank');
     });
 
+    // ── Форма ──
+
+    // Ставим минимальную дату = сегодня (гость не забронирует прошлое)
+    const dateInput = document.getElementById('book-date');
+    if (dateInput) {
+      const today = new Date();
+      const iso = today.toISOString().slice(0, 10);
+      dateInput.min = iso;
+    }
+
+    // Плашки «Сколько человек?» — 1, 2, 3, 4, 5, 6+
+    const guestsWrap = document.getElementById('book-guests');
+    if (guestsWrap && !guestsWrap.dataset.rendered) {
+      ['1', '2', '3', '4', '5', '6+'].forEach(value => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.dataset.guests = value;
+        btn.textContent = value;
+        btn.addEventListener('click', () => {
+          hapticSelect();
+          // Переключаем — если уже активна, снимаем
+          const wasActive = btn.classList.contains('active');
+          guestsWrap.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+          if (!wasActive) btn.classList.add('active');
+        });
+        guestsWrap.appendChild(btn);
+      });
+      guestsWrap.dataset.rendered = '1';
+    }
+
+    // Тап-хаптик для тач-полей
+    ['book-date', 'book-time', 'book-occasion'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('focus', hapticSelect);
+    });
+
     // Расписание работы для экрана Бронирования — многострочный HTML
     document.getElementById('book-hours').innerHTML = M.RESTAURANT.schedule
       .map(row => `<div>${escapeHtml(row.days)} — <strong>${escapeHtml(row.text)}</strong></div>`)
@@ -774,6 +873,12 @@
     document.getElementById('sheet-dish-img').alt = dish.name;
     document.getElementById('sheet-dish-name').textContent = dish.name;
     document.getElementById('sheet-dish-desc').textContent = dish.desc;
+
+    // Плашка «популярное» в bottom sheet — над названием
+    const popEl = document.getElementById('sheet-dish-popular');
+    if (popEl) {
+      popEl.style.display = dish.popular ? '' : 'none';
+    }
     document.getElementById('sheet-dish-grams').textContent = dish.grams || '';
     document.getElementById('sheet-dish-price').textContent = dish.price + ' ₽';
 

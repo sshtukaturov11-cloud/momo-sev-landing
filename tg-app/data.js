@@ -105,42 +105,42 @@
   const DISHES = {
     appetizers: [
       { name: 'Филе сельди',                                desc: 'Запечённый картофель, ялтинский лук',                            grams: '200 г',     price: 565, allergens: ['fish'],                  photo: img('МОМО/ваня_апрель2026/Снимок экрана 2026-05-12 в 18.10.39.png') },
-      { name: 'Кусияки из креветок и утиной грудки',        desc: 'Глазурь из жжёного мёда, можжевельник',                          grams: '150 г',     price: 825, allergens: ['shellfish'],             photo: img('МОМО/ваня_апрель2026/Снимок экрана 2026-05-12 в 18.11.21.png') },
-      { name: 'Мясной сет',                                  desc: 'Ростбиф, свиная вырезка, чоризо, квашеная капуста, соусы',       grams: '210/60 г',  price: 745, allergens: ['dairy'],                 photo: img('МОМО/ваня_апрель2026/Снимок экрана 2026-05-12 в 18.11.50.png') }
+      { name: 'Кусияки из креветок и утиной грудки', popular: true, desc: 'Глазурь из жжёного мёда, можжевельник',                          grams: '150 г',     price: 825, allergens: ['shellfish'],             photo: img('МОМО/ваня_апрель2026/Снимок экрана 2026-05-12 в 18.11.21.png') },
+      { name: 'Мясной сет', popular: true, desc: 'Ростбиф, свиная вырезка, чоризо, квашеная капуста, соусы',       grams: '210/60 г',  price: 745, allergens: ['dairy'],                 photo: img('МОМО/ваня_апрель2026/Снимок экрана 2026-05-12 в 18.11.50.png') }
     ],
     salads: [
-      { name: 'Цезарь с креветками',                        desc: 'Романо, пармезан, креветки, чесночные крутоны',                  grams: '220 г',     price: 745, allergens: ['dairy','shellfish','gluten'], photo: img('МОМО/ваня_апрель2026/Снимок экрана 2026-05-12 в 18.12.00.png') },
+      { name: 'Цезарь с креветками', popular: true, desc: 'Романо, пармезан, креветки, чесночные крутоны',                  grams: '220 г',     price: 745, allergens: ['dairy','shellfish','gluten'], photo: img('МОМО/ваня_апрель2026/Снимок экрана 2026-05-12 в 18.12.00.png') },
       { name: 'Греческий',                                  desc: 'Помидоры, огурцы, фета, оливки, ялтинский лук, оливковое масло',  grams: '250 г',     price: 525, allergens: ['dairy'],                 photo: img('МОМО/ваня_апрель2026/Снимок экрана 2026-05-12 в 18.12.11.png') },
-      { name: 'Тёплый салат с рапаной',                     desc: 'Рапана, шпинат, черри, ялтинский лук, оливковое масло',          grams: '180 г',     price: 695, allergens: ['shellfish'],             photo: DISH_PLACEHOLDER }
+      { name: 'Тёплый салат с рапаной', popular: true, desc: 'Рапана, шпинат, черри, ялтинский лук, оливковое масло',          grams: '180 г',     price: 695, allergens: ['shellfish'],             photo: DISH_PLACEHOLDER }
     ],
     soups: [
-      { name: 'Том Ям с креветками',                        desc: 'Острый кокосовый бульон, грибы, листья каффира',                  grams: '320 г',     price: 685, allergens: ['shellfish'],             photo: img('МОМО/ваня_апрель2026/Снимок экрана 2026-05-12 в 18.12.22.png') },
-      { name: 'Уха по-севастопольски',                      desc: 'Из пеленгаса, на овощном бульоне, с укропом',                     grams: '300 г',     price: 525, allergens: ['fish'],                  photo: DISH_PLACEHOLDER },
+      { name: 'Том Ям с креветками', popular: true, desc: 'Острый кокосовый бульон, грибы, листья каффира',                  grams: '320 г',     price: 685, allergens: ['shellfish'],             photo: img('МОМО/ваня_апрель2026/Снимок экрана 2026-05-12 в 18.12.22.png') },
+      { name: 'Уха по-севастопольски', popular: true, desc: 'Из пеленгаса, на овощном бульоне, с укропом',                     grams: '300 г',     price: 525, allergens: ['fish'],                  photo: DISH_PLACEHOLDER },
       { name: 'Крем-суп из тыквы',                          desc: 'С тыквенными семечками и сливками',                               grams: '280 г',     price: 425, allergens: ['dairy'],                 photo: DISH_PLACEHOLDER }
     ],
     pastas: [
-      { name: 'Карбонара',                                  desc: 'Бекон, яичный желток, пармезан, чёрный перец',                    grams: '320 г',     price: 625, allergens: ['dairy','gluten','egg'],  photo: DISH_PLACEHOLDER },
-      { name: 'Паста с морепродуктами',                     desc: 'Креветки, мидии, томатный соус, базилик',                         grams: '350 г',     price: 825, allergens: ['shellfish','gluten'],    photo: DISH_PLACEHOLDER },
+      { name: 'Карбонара', popular: true, desc: 'Бекон, яичный желток, пармезан, чёрный перец',                    grams: '320 г',     price: 625, allergens: ['dairy','gluten','egg'],  photo: DISH_PLACEHOLDER },
+      { name: 'Паста с морепродуктами', popular: true, desc: 'Креветки, мидии, томатный соус, базилик',                         grams: '350 г',     price: 825, allergens: ['shellfish','gluten'],    photo: DISH_PLACEHOLDER },
       { name: 'Феттучини с курицей и грибами',              desc: 'Куриная грудка, шампиньоны, сливочный соус, пармезан',             grams: '320 г',     price: 645, allergens: ['dairy','gluten'],        photo: DISH_PLACEHOLDER }
     ],
     meat: [
-      { name: 'Утиная грудка',                              desc: 'Розмарин, картофельное пюре, сливочный соус',                     grams: '230 г',     price: 1190, allergens: ['dairy'],                photo: img('МОМО/ваня_апрель2026/Снимок экрана 2026-05-12 в 18.12.28.png') },
-      { name: 'Битки по-Севастопольски',                    desc: 'Свиная отбивная, молочный кляр, перечная сметана',                grams: '280 г',     price: 685, allergens: ['dairy','gluten'],        photo: img('Севастопольские сезоны/Битки по севастопольски.jpg') },
+      { name: 'Утиная грудка', popular: true, desc: 'Розмарин, картофельное пюре, сливочный соус',                     grams: '230 г',     price: 1190, allergens: ['dairy'],                photo: img('МОМО/ваня_апрель2026/Снимок экрана 2026-05-12 в 18.12.28.png') },
+      { name: 'Битки по-Севастопольски', popular: true, desc: 'Свиная отбивная, молочный кляр, перечная сметана',                grams: '280 г',     price: 685, allergens: ['dairy','gluten'],        photo: img('Севастопольские сезоны/Битки по севастопольски.jpg') },
       { name: 'Стейк рибай',                                desc: 'Говядина, перечный соус, картофель конфи',                         grams: '300 г',     price: 1890, allergens: [],                       photo: DISH_PLACEHOLDER }
     ],
     fish: [
-      { name: 'Пеленгас на гриле',                          desc: 'Пюре из печёного баклажана, лимонный соус',                        grams: '200 г',     price: 1290, allergens: ['fish'],                 photo: img('МОМО/ваня_апрель2026/Снимок экрана 2026-05-12 в 18.13.05.png') },
-      { name: 'Соль-Сисоль',                                desc: 'Запечённый пеленгас, картофельный гратен. Историческое блюдо',     grams: '230 г',     price: 725, allergens: ['fish','dairy'],          photo: img('Севастопольские сезоны/Соль сисоль.jpg') },
+      { name: 'Пеленгас на гриле', popular: true, desc: 'Пюре из печёного баклажана, лимонный соус',                        grams: '200 г',     price: 1290, allergens: ['fish'],                 photo: img('МОМО/ваня_апрель2026/Снимок экрана 2026-05-12 в 18.13.05.png') },
+      { name: 'Соль-Сисоль', popular: true, desc: 'Запечённый пеленгас, картофельный гратен. Историческое блюдо',     grams: '230 г',     price: 725, allergens: ['fish','dairy'],          photo: img('Севастопольские сезоны/Соль сисоль.jpg') },
       { name: 'Севиче из пеленгаса',                        desc: 'Яблоки из села Родного, огурцы, цитрусовый соус',                 grams: '185 г',     price: 645, allergens: ['fish'],                  photo: img('Севастопольские сезоны/Севиче из пеленгаса.jpg') }
     ],
     pizza: [
       { name: 'Мясная',                                     desc: 'Свиная корейка, мортаделла, шампиньоны, пармезан',                grams: '400 г',     price: 895, allergens: ['dairy','gluten'],        photo: img('МОМО/ваня_апрель2026/Снимок экрана 2026-05-12 в 18.13.43.png') },
-      { name: 'С креветками, грушей и дорблю',              desc: 'Чеддер, моцарелла',                                                grams: '380 г',     price: 925, allergens: ['dairy','gluten','shellfish'], photo: img('МОМО/ваня_апрель2026/Снимок экрана 2026-05-12 в 18.17.31.png') },
-      { name: 'Маргарита',                                  desc: 'Моцарелла, томатный соус, базилик',                                grams: '380 г',     price: 625, allergens: ['dairy','gluten'],        photo: img('МОМО/ваня_апрель2026/Снимок экрана 2026-05-12 в 18.18.30.png') }
+      { name: 'С креветками, грушей и дорблю', popular: true, desc: 'Чеддер, моцарелла',                                                grams: '380 г',     price: 925, allergens: ['dairy','gluten','shellfish'], photo: img('МОМО/ваня_апрель2026/Снимок экрана 2026-05-12 в 18.17.31.png') },
+      { name: 'Маргарита', popular: true, desc: 'Моцарелла, томатный соус, базилик',                                grams: '380 г',     price: 625, allergens: ['dairy','gluten'],        photo: img('МОМО/ваня_апрель2026/Снимок экрана 2026-05-12 в 18.18.30.png') }
     ],
     desserts: [
-      { name: 'Лавандовое безе с морской солью',            desc: 'Крем из печёного пастернака, грецкий орех',                       grams: '85 г',      price: 385, allergens: ['nuts','egg'],            photo: img('Севастопольские сезоны/Лавандовое бизе.jpg') },
-      { name: 'Чернильный фондан',                          desc: 'Шоколад, морская соль, ванильное мороженое',                       grams: '180 г',     price: 485, allergens: ['dairy','gluten','egg'],  photo: DISH_PLACEHOLDER },
+      { name: 'Лавандовое безе с морской солью', popular: true, desc: 'Крем из печёного пастернака, грецкий орех',                       grams: '85 г',      price: 385, allergens: ['nuts','egg'],            photo: img('Севастопольские сезоны/Лавандовое бизе.jpg') },
+      { name: 'Чернильный фондан', popular: true, desc: 'Шоколад, морская соль, ванильное мороженое',                       grams: '180 г',     price: 485, allergens: ['dairy','gluten','egg'],  photo: DISH_PLACEHOLDER },
       { name: 'Чизкейк Нью-Йорк',                           desc: 'Классический, на песочном тесте',                                   grams: '150 г',     price: 425, allergens: ['dairy','gluten','egg'],  photo: DISH_PLACEHOLDER }
     ]
   };
