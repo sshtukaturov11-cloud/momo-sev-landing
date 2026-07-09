@@ -412,7 +412,19 @@ a { color: var(--tg-link); text-decoration: none; }
   padding: 18px var(--page-pad) 12px;
   font-size: 14px;
 }
-.subnav button { color: var(--tg-link); padding: 6px 4px; min-height: 32px; }
+/* Каждая ссылка «Галерея» / «Контакты» превращается в чёткую pill-кнопку
+   с фоном и тенью — заметно лучше, чем маленький синий текст на пустоте. */
+.subnav button {
+  color: var(--tg-text);
+  background: var(--tg-section-bg);
+  border: 1px solid var(--tg-section-separator);
+  border-radius: var(--radius-pill);
+  padding: 12px 22px;
+  min-height: var(--tap-min);
+  font-size: 15px;
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+}
 
 
 /* ============================================================
